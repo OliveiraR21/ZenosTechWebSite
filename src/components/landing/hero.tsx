@@ -19,7 +19,7 @@ export function Hero() {
         </p>
         <div className="mt-8 flex flex-col items-center gap-4">
           <Button size="lg" className="font-bold text-lg px-10 py-6">
-            INICIAR EVOLUÇÃO AGORA
+            AGENDAR SESSÃO ESTRATÉGICA
           </Button>
           <p className="text-sm text-muted-foreground/80">Agilidade Simples. Excelência Duradoura.</p>
         </div>

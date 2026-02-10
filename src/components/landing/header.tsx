@@ -81,7 +81,7 @@ export function Header() {
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <Button>IMPLANTAR PADRÃO ZENOS</Button>
+          <Button>FALAR COM UM ESTRATEGISTA</Button>
         </div>
       </div>
     </header>

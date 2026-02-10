@@ -13,7 +13,7 @@ export function FinalCta() {
           </p>
           <div className="pt-4">
             <Button size="lg" className="font-bold text-lg px-10 py-6">
-              IMPLANTAR PADRÃO ZENOS
+              AGENDAR SESSÃO ESTRATÉGICA
             </Button>
           </div>
         </div>
