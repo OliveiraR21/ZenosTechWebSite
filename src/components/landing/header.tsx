@@ -98,7 +98,7 @@ export function Header() {
         </div>
 
         <div className="flex items-center">
-          <Button>ACESSAR PADRÃO</Button>
+          <Button>IMPLANTAR PADRÃO ZENOS</Button>
         </div>
       </div>
     </header>
