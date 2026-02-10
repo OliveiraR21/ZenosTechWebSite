@@ -27,7 +27,7 @@ export function Footer() {
             <Instagram className="h-6 w-6" />
           </a>
           <a
-            href="mailto:contact@zenos.web"
+            href="mailto:contact@zenos.tech"
             aria-label="Contact"
             className="transition-colors hover:text-primary"
           >
@@ -36,7 +36,7 @@ export function Footer() {
         </div>
       </div>
       <div className="container mx-auto mt-6 text-center text-sm text-muted-foreground/50">
-        <p>&copy; {new Date().getFullYear()} Zenos Web. Todos os direitos reservados.</p>
+        <p>&copy; {new Date().getFullYear()} Zenos Tech. Todos os direitos reservados.</p>
       </div>
     </footer>
   );

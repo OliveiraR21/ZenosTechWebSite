@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'Zenos Web',
+  title: 'Zenos Tech',
   description: 'Implemente o Padrão Zenos e transforme sua operação com agilidade, inovação e clareza.',
 };
 
