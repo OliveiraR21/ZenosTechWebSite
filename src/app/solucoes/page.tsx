@@ -34,7 +34,6 @@ export default function SolucoesPage() {
                     <CardTitle className="font-headline text-3xl uppercase">Consultoria Estratégica</CardTitle>
                 </CardHeader>
                 <CardContent className="flex-grow flex flex-col">
-                    <p className="text-center text-muted-foreground mb-4">Fluxogramas organizados para clareza total.</p>
                     {flowchartImage && (
                         <div className="relative w-full flex-grow aspect-[4/3] rounded-md overflow-hidden mt-auto">
                             <Image
@@ -58,7 +57,6 @@ export default function SolucoesPage() {
                     <CardTitle className="font-headline text-3xl uppercase">Automação Inteligente</CardTitle>
                 </CardHeader>
                 <CardContent className="flex-grow flex flex-col">
-                    <p className="text-center text-muted-foreground mb-4">Interfaces de chat ágeis para execução rápida.</p>
                     {chatImage && (
                         <div className="relative w-full flex-grow aspect-[4/3] rounded-md overflow-hidden mt-auto">
                             <Image
