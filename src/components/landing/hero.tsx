@@ -11,7 +11,7 @@ export function Hero() {
       </div>
 
       <div className="relative z-10 container mx-auto px-4 text-center">
-        <h1 className="font-headline text-6xl md:text-8xl lg:text-9xl font-bold uppercase tracking-tighter text-foreground animate-fade-in-down">
+        <h1 className="font-headline text-6xl md:text-8xl lg:text-9xl font-bold uppercase text-foreground animate-fade-in-down">
           A EXCELÊNCIA É SIMPLES.
         </h1>
         <p className="mt-4 max-w-3xl mx-auto text-lg md:text-xl text-muted-foreground text-balance animate-fade-in-up">
