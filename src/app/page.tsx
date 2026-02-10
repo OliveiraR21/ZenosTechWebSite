@@ -3,6 +3,8 @@ import { Hero } from "@/components/landing/hero";
 import { Manifesto } from "@/components/landing/manifesto";
 import { Pillars } from "@/components/landing/pillars";
 import { NikoFactor } from "@/components/landing/niko-factor";
+import { SocialProof } from "@/components/landing/social-proof";
+import { FinalCta } from "@/components/landing/final-cta";
 import { Footer } from "@/components/landing/footer";
 
 export default function Home() {
@@ -20,6 +22,8 @@ export default function Home() {
         <section id="metodologia">
           <NikoFactor />
         </section>
+        <SocialProof />
+        <FinalCta />
         <Footer />
       </main>
     </div>
