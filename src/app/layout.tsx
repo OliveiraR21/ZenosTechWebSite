@@ -6,6 +6,20 @@ import { ThemeProvider } from '@/components/theme-provider';
 export const metadata: Metadata = {
   title: 'Zenos Tech',
   description: 'Implemente o Padrão Zenos e transforme sua operação com agilidade, inovação e clareza.',
+  icons: {
+    icon: [
+      {
+        media: '(prefers-color-scheme: light)',
+        url: '/zenos_sem_fundo_claro.png',
+        href: '/zenos_sem_fundo_claro.png',
+      },
+      {
+        media: '(prefers-color-scheme: dark)',
+        url: '/zenos_sem_fundo_escuro.png',
+        href: '/zenos_sem_fundo_escuro.png',
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
