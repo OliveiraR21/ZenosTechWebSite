@@ -4,11 +4,19 @@ export function Manifesto() {
       <div className="container mx-auto px-4 text-center">
         <div className="max-w-4xl mx-auto">
           <h2 className="font-headline text-3xl sm:text-4xl md:text-5xl font-bold uppercase tracking-wide text-primary">
-            O QUE NÃO É SIMPLES, INTUITIVO E DURADOURO, NÃO É ZENOS
+            O mundo dos negócios glorifica a complexidade. Nós glorificamos o resultado.
           </h2>
-          <p className="mt-6 text-lg text-muted-foreground text-balance">
-            "Acreditamos que a inovação real não está em adicionar mais etapas, mas em remover barreiras. No cockpit da sua empresa, a visão deve ser clara para que a execução seja precisa. O Padrão Zenos é o filtro entre o movimento desnecessário e a ação estratégica. Se não for intuitivo e duradouro, não serve para o seu crescimento."
-          </p>
+          <div className="mt-6 text-lg text-muted-foreground text-balance space-y-4">
+            <p>
+              Acreditamos que a verdadeira inovação não é adicionar mais etapas, é remover barreiras. Para quem busca crescer com agilidade, a visão precisa estar limpa. Sem excessos, sem ruído, sem funcionalidades inúteis.
+            </p>
+            <p>
+              A Zenos é o filtro que separa o movimento desnecessário da ação estratégica. Nossa tecnologia é desenhada para ser invisível na operação e impactante nos lucros.
+            </p>
+            <p className="font-bold">
+              Se não for simples, não é inteligente. Se não for intuitivo, não é ágil. Se não for duradouro, não é Zenos.
+            </p>
+          </div>
         </div>
       </div>
     </section>
