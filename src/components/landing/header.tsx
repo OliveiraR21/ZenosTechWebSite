@@ -7,6 +7,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { useState, useEffect } from "react";
 import { ThemeToggle } from "../theme-toggle";
+import { cn } from "@/lib/utils";
 
 const navLinks = [
   { href: "#manifesto", label: "Manifesto" },
@@ -14,23 +15,21 @@ const navLinks = [
   { href: "#metodologia", label: "Metodologia" },
 ];
 
-const LogoImage = () => (
-    <>
+const LogoImage = ({ className }: { className?: string }) => (
+    <div className={cn("relative", className)}>
         <Image
             src="/zenos_sem_fundo_escuro.png"
-            width={80}
-            height={32}
+            fill
             alt="Zenos Tech Logo"
-            className="dark:block hidden"
+            className="dark:block hidden object-contain"
         />
         <Image
             src="/zenos_sem_fundo_claro.png"
-            width={80}
-            height={32}
+            fill
             alt="Zenos Tech Logo"
-            className="dark:hidden block"
+            className="dark:hidden block object-contain"
         />
-    </>
+    </div>
 );
 
 
@@ -57,7 +56,7 @@ export function Header() {
                 </SheetTrigger>
                 <SheetContent side="left">
                   <Link href="/" className="mb-6 flex items-center" onClick={() => setIsOpen(false)}>
-                      <LogoImage />
+                      <LogoImage className="h-8 w-20" />
                   </Link>
                   <nav className="flex flex-col gap-4">
                     {navLinks.map((link) => (
@@ -77,7 +76,7 @@ export function Header() {
           </div>
           
           <Link href="/" className="hidden md:flex items-center">
-            <LogoImage />
+            <LogoImage className="h-8 w-20" />
           </Link>
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium ml-6">
             {navLinks.map((link) => (
@@ -94,7 +93,7 @@ export function Header() {
 
         <div className="flex items-center md:hidden">
             <Link href="/" className="flex items-center">
-                <LogoImage />
+                <LogoImage className="h-8 w-20" />
             </Link>
         </div>
 
