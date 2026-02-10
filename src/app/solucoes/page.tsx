@@ -1,13 +1,8 @@
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
-import Image from "next/image";
-import imageData from "@/lib/placeholder-images.json";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Workflow, MessagesSquare } from 'lucide-react';
-
-
-const flowchartImage = imageData.placeholderImages.find(img => img.id === 'flowchart-consultancy');
-const chatImage = imageData.placeholderImages.find(img => img.id === 'chat-automation');
+import { ClipboardList, Bot } from 'lucide-react';
 
 export default function SolucoesPage() {
   return (
@@ -24,50 +19,60 @@ export default function SolucoesPage() {
         </section>
 
         <section className="container mx-auto px-4 pb-20">
-          <div className="grid md:grid-cols-2 gap-8 items-stretch">
-            {/* Left side: Consultancy - Flowcharts */}
-            <Card className="flex flex-col bg-card/50 border-border/50 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 transform hover:-translate-y-1">
+          <div className="grid md:grid-cols-2 gap-8 items-start">
+            {/* Bloco A: ZENOS ADVISORY */}
+            <Card className="flex flex-col h-full bg-card/50 border-border/50 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
                 <CardHeader className="text-center">
-                    <div className="mx-auto bg-primary/10 rounded-full p-3 w-fit mb-2">
-                        <Workflow className="h-8 w-8 text-primary" />
+                    <div className="mx-auto bg-primary/10 rounded-full p-3 w-fit mb-4">
+                        <ClipboardList className="h-8 w-8 text-primary" />
                     </div>
-                    <CardTitle className="font-headline text-3xl uppercase">Consultoria Estratégica</CardTitle>
+                    <p className="font-headline text-4xl uppercase text-primary">ZENOS ADVISORY</p>
+                    <CardTitle className="text-xl md:text-2xl font-bold text-foreground pt-2 text-balance">"Antes de acelerar, ajuste a rota."</CardTitle>
                 </CardHeader>
-                <CardContent className="flex-grow flex flex-col">
-                    {flowchartImage && (
-                        <div className="relative w-full flex-grow aspect-[4/3] rounded-md overflow-hidden mt-auto">
-                            <Image
-                                src={flowchartImage.imageUrl}
-                                alt={flowchartImage.description}
-                                fill
-                                className="object-cover"
-                                data-ai-hint={flowchartImage.imageHint}
-                            />
-                        </div>
-                    )}
+                <CardContent className="flex-grow flex flex-col space-y-6 text-center">
+                    <div>
+                        <p className="font-semibold text-muted-foreground tracking-wider uppercase text-sm">A Dor</p>
+                        <p className="text-foreground/90 mt-1 text-balance">O esforço operacional sem direção clara gera cansaço, não lucro.</p>
+                    </div>
+                     <div>
+                        <p className="font-semibold text-muted-foreground tracking-wider uppercase text-sm">A Solução Zenos</p>
+                        <p className="text-foreground/90 mt-1 text-balance">Realizamos um diagnóstico profundo do seu negócio. Mapeamos gargalos, redesenhamos processos ineficientes e definimos indicadores reais de sucesso.</p>
+                    </div>
+                     <div>
+                        <p className="font-semibold text-muted-foreground tracking-wider uppercase text-sm">O Ganho</p>
+                        <p className="font-bold text-primary mt-1 text-balance">Transforme a intuição em gestão profissional.</p>
+                    </div>
+                    <div className="pt-4 mt-auto">
+                        <Button size="lg" className="w-full font-bold">INICIAR DIAGNÓSTICO</Button>
+                    </div>
                 </CardContent>
             </Card>
             
-            {/* Right side: Automation - Chat */}
-            <Card className="flex flex-col bg-card/50 border-border/50 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 transform hover:-translate-y-1">
-                <CardHeader className="text-center">
-                    <div className="mx-auto bg-primary/10 rounded-full p-3 w-fit mb-2">
-                        <MessagesSquare className="h-8 w-8 text-primary" />
+            {/* Bloco B: ZENOS RESPONSE */}
+            <Card className="flex flex-col h-full bg-card/50 border-border/50 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
+                 <CardHeader className="text-center">
+                    <div className="mx-auto bg-primary/10 rounded-full p-3 w-fit mb-4">
+                        <Bot className="h-8 w-8 text-primary" />
                     </div>
-                    <CardTitle className="font-headline text-3xl uppercase">Automação Inteligente</CardTitle>
+                    <p className="font-headline text-4xl uppercase text-primary">ZENOS RESPONSE</p>
+                    <CardTitle className="text-xl md:text-2xl font-bold text-foreground pt-2 text-balance">"Atendimento imediato. Venda constante."</CardTitle>
                 </CardHeader>
-                <CardContent className="flex-grow flex flex-col">
-                    {chatImage && (
-                        <div className="relative w-full flex-grow aspect-[4/3] rounded-md overflow-hidden mt-auto">
-                            <Image
-                                src={chatImage.imageUrl}
-                                alt={chatImage.description}
-                                fill
-                                className="object-cover"
-                                data-ai-hint={chatImage.imageHint}
-                            />
-                        </div>
-                    )}
+                <CardContent className="flex-grow flex flex-col space-y-6 text-center">
+                   <div>
+                        <p className="font-semibold text-muted-foreground tracking-wider uppercase text-sm">A Dor</p>
+                        <p className="text-foreground/90 mt-1 text-balance">Clientes esperando horas por uma resposta simples ou leads esfriando no WhatsApp.</p>
+                    </div>
+                     <div>
+                        <p className="font-semibold text-muted-foreground tracking-wider uppercase text-sm">A Solução Zenos</p>
+                        <p className="text-foreground/90 mt-1 text-balance">Implementamos robôs de atendimento humanizados que triam, respondem e agendam para você, 24 horas por dia.</p>
+                    </div>
+                     <div>
+                        <p className="font-semibold text-muted-foreground tracking-wider uppercase text-sm">O Ganho</p>
+                        <p className="font-bold text-primary mt-1 text-balance">Sua empresa nunca para de atender, mesmo quando você descansa.</p>
+                    </div>
+                    <div className="pt-4 mt-auto">
+                        <Button size="lg" className="w-full font-bold">AUTOMATIZAR MEU ATENDIMENTO</Button>
+                    </div>
                 </CardContent>
             </Card>
           </div>
