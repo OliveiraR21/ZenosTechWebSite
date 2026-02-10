@@ -9,9 +9,10 @@ import { ThemeToggle } from "../theme-toggle";
 import { LogoImage } from "@/components/logo";
 
 const navLinks = [
-  { href: "#manifesto", label: "Manifesto" },
-  { href: "#diferenciais", label: "Diferenciais" },
-  { href: "#metodologia", label: "Metodologia" },
+  { href: "/#manifesto", label: "Manifesto" },
+  { href: "/#diferenciais", label: "Diferenciais" },
+  { href: "/#metodologia", label: "Metodologia" },
+  { href: "/solucoes", label: "Soluções" },
 ];
 
 export function Header() {
