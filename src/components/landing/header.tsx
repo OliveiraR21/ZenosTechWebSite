@@ -17,15 +17,15 @@ const LogoImage = () => (
     <>
         <Image
             src="/zenos_sem_fundo_escuro.png"
-            width={100}
-            height={25}
+            width={80}
+            height={20}
             alt="Zenos Tech Logo"
             className="dark:block hidden"
         />
         <Image
             src="/zenos_sem_fundo_claro.png"
-            width={100}
-            height={25}
+            width={80}
+            height={20}
             alt="Zenos Tech Logo"
             className="dark:hidden block"
         />
