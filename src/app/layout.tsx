@@ -2,6 +2,10 @@ import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from '@/components/theme-provider';
+import { Inter, Teko } from 'next/font/google';
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const teko = Teko({ subsets: ['latin'], weight: ['400', '700'], variable: '--font-teko' });
 
 export const metadata: Metadata = {
   title: 'Zenos Tech',
@@ -30,11 +34,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Teko:wght@400;700&display=swap" rel="stylesheet" />
       </head>
-      <body className="font-body antialiased">
+      <body className={`${inter.variable} ${teko.variable} font-body antialiased`}>
         <ThemeProvider
             attribute="class"
             defaultTheme="dark"
