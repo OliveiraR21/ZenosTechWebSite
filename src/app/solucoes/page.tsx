@@ -1,8 +1,10 @@
+import Link from "next/link";
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { ClipboardList, Bot, LayoutGrid, BookOpenCheck, Database, Landmark } from 'lucide-react';
+import { WHATSAPP_LINKS } from "@/lib/constants";
 
 const sustainingSolutions = [
   {
@@ -71,7 +73,9 @@ export default function SolucoesPage() {
                         <p className="font-bold text-primary mt-1 text-balance">Transforme a intuição em gestão profissional.</p>
                     </div>
                     <div className="pt-4 mt-auto">
-                        <Button size="lg" className="w-full font-bold">INICIAR DIAGNÓSTICO</Button>
+                      <Button size="lg" className="w-full font-bold" asChild>
+                          <Link href={WHATSAPP_LINKS.advisory} target="_blank">INICIAR DIAGNÓSTICO</Link>
+                      </Button>
                     </div>
                 </CardContent>
             </Card>
@@ -99,7 +103,9 @@ export default function SolucoesPage() {
                         <p className="font-bold text-primary mt-1 text-balance">Sua empresa nunca para de atender, mesmo quando você descansa.</p>
                     </div>
                     <div className="pt-4 mt-auto">
-                        <Button size="lg" className="w-full font-bold">AUTOMATIZAR MEU ATENDIMENTO</Button>
+                        <Button size="lg" className="w-full font-bold" asChild>
+                            <Link href={WHATSAPP_LINKS.response} target="_blank">AUTOMATIZAR MEU ATENDIMENTO</Link>
+                        </Button>
                     </div>
                 </CardContent>
             </Card>
@@ -160,8 +166,10 @@ export default function SolucoesPage() {
                         Não importa o tamanho da sua operação hoje, importa o padrão que você quer ter amanhã.
                     </p>
                     <div className="pt-4">
-                        <Button size="lg" className="font-bold text-lg px-10 py-6">
+                        <Button size="lg" className="font-bold text-lg px-10 py-6" asChild>
+                          <Link href={WHATSAPP_LINKS.strategist} target="_blank">
                             FALAR COM UM ESTRATEGISTA
+                          </Link>
                         </Button>
                     </div>
                 </div>

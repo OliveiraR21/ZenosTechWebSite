@@ -7,6 +7,7 @@ import { Menu } from "lucide-react";
 import { useState, useEffect } from "react";
 import { ThemeToggle } from "../theme-toggle";
 import { LogoImage } from "@/components/logo";
+import { WHATSAPP_LINKS } from "@/lib/constants";
 
 const navLinks = [
   { href: "/#manifesto", label: "Manifesto" },
@@ -38,7 +39,7 @@ export function Header() {
                 </SheetTrigger>
                 <SheetContent side="left">
                   <Link href="/" className="mb-6 flex items-center" onClick={() => setIsOpen(false)}>
-                      <LogoImage className="h-8 w-20" />
+                      <LogoImage className="relative h-8 w-20" />
                   </Link>
                   <nav className="flex flex-col gap-4">
                     {navLinks.map((link) => (
@@ -58,7 +59,7 @@ export function Header() {
           </div>
           
           <Link href="/" className="hidden md:flex items-center">
-            <LogoImage className="h-8 w-20" />
+            <LogoImage className="relative h-8 w-20" />
           </Link>
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium ml-6">
             {navLinks.map((link) => (
@@ -75,13 +76,15 @@ export function Header() {
 
         <div className="flex items-center md:hidden">
             <Link href="/" className="flex items-center">
-                <LogoImage className="h-8 w-20" />
+                <LogoImage className="relative h-8 w-20" />
             </Link>
         </div>
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <Button>FALAR COM UM ESTRATEGISTA</Button>
+          <Button asChild>
+            <Link href={WHATSAPP_LINKS.strategist} target="_blank">FALAR COM UM ESTRATEGISTA</Link>
+          </Button>
         </div>
       </div>
     </header>

@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { WHATSAPP_LINKS } from "@/lib/constants";
 
 export function FinalCta() {
   return (
@@ -12,8 +14,8 @@ export function FinalCta() {
             Junte-se à elite que escolheu a clareza em vez do caos.
           </p>
           <div className="pt-4">
-            <Button size="lg" className="font-bold text-lg px-10 py-6">
-              AGENDAR SESSÃO ESTRATÉGICA
+            <Button size="lg" className="font-bold text-lg px-10 py-6" asChild>
+              <Link href={WHATSAPP_LINKS.strategicSession} target="_blank">AGENDAR SESSÃO ESTRATÉGICA</Link>
             </Button>
           </div>
         </div>

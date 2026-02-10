@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ZenosLogo } from "@/components/logo";
+import { WHATSAPP_LINKS } from "@/lib/constants";
 
 export function Hero() {
   return (
@@ -11,16 +13,16 @@ export function Hero() {
       </div>
 
       <div className="relative z-10 container mx-auto px-4 text-center">
-        <h1 className="font-headline text-6xl md:text-8xl lg:text-9xl font-bold uppercase text-foreground animate-fade-in-down">
+        <h1 className="font-headline text-6xl md:text-8xl lg:text-9xl font-bold uppercase text-foreground animate-fade-in-down tracking-normal">
           A EXCELÊNCIA É SIMPLES.
         </h1>
         <p className="mt-4 max-w-3xl mx-auto text-lg md:text-xl text-muted-foreground text-balance animate-fade-in-up">
           Projetamos ecossistemas de alta performance para quem não aceita o ruído da complexidade. Profissionalize sua operação com o padrão de elite que seu negócio exige.
         </p>
         <div className="mt-8 flex flex-col items-center gap-4">
-          <Button size="lg" className="font-bold text-lg px-10 py-6">
-            AGENDAR SESSÃO ESTRATÉGICA
-          </Button>
+           <Button size="lg" className="font-bold text-lg px-10 py-6" asChild>
+              <Link href={WHATSAPP_LINKS.strategicSession} target="_blank">AGENDAR SESSÃO ESTRATÉGICA</Link>
+            </Button>
           <p className="text-sm text-muted-foreground/80">Agilidade Simples. Excelência Duradoura.</p>
         </div>
       </div>
