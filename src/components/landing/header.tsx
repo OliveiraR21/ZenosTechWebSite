@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { useState, useEffect } from "react";
+import { ThemeToggle } from "../theme-toggle";
 
 const navLinks = [
   { href: "#manifesto", label: "Manifesto" },
@@ -97,7 +98,8 @@ export function Header() {
             </Link>
         </div>
 
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
           <Button>IMPLANTAR PADRÃO ZENOS</Button>
         </div>
       </div>
