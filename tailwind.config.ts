@@ -8,10 +8,17 @@ export default {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
     extend: {
       fontFamily: {
         body: ['Inter', 'sans-serif'],
-        headline: ['Inter', 'sans-serif'],
+        headline: ['Teko', 'sans-serif'],
         code: ['monospace'],
       },
       colors: {
@@ -88,10 +95,37 @@ export default {
             height: '0',
           },
         },
+        'border-glow': {
+          '0%, 100%': { 'box-shadow': '0 0 10px -5px hsl(var(--primary))' },
+          '50%': { 'box-shadow': '0 0 20px 0px hsl(var(--primary) / 0.7)' },
+        },
+        'fade-in-down': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(-20px)'
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)'
+          }
+        },
+        'fade-in-up': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(20px)'
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)'
+          }
+        }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'border-glow': 'border-glow 5s ease-in-out infinite',
+        'fade-in-down': 'fade-in-down 0.5s ease-out forwards',
+        'fade-in-up': 'fade-in-up 0.5s ease-out 0.2s forwards'
       },
     },
   },

@@ -1,3 +1,10 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "niko-tactical",
+      "description": "Image of NIKO, an AI strategic mentor, in a premium tactical suit next to a clean dashboard.",
+      "imageUrl": "https://images.unsplash.com/photo-1654900985944-10c3872a3c86?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx0YWN0aWNhbCUyMHN1aXQlMjBtYW58ZW58MHx8fHwxNzcwNjg3OTk4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "tactical suit man"
+    }
+  ]
 }
