@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -25,15 +25,36 @@ type FormValues = z.infer<typeof formSchema>;
 
 const nikoImage = nikoImageData.placeholderImages.find(img => img.id === 'niko-tactical');
 
+const loadingMessages = [
+    "Analisando mercado...",
+    "Identificando gargalos...",
+    "Formulando estratégia...",
+    "Cruzando dados de performance...",
+    "Buscando insights de crescimento...",
+];
+
 export function NikoFactor() {
   const [isLoading, setIsLoading] = useState(false);
   const [strategy, setStrategy] = useState<string | null>(null);
+  const [loadingMessage, setLoadingMessage] = useState(loadingMessages[0]);
   const { toast } = useToast();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: { businessData: "" },
   });
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isLoading) {
+      let i = 0;
+      interval = setInterval(() => {
+        i = (i + 1) % loadingMessages.length;
+        setLoadingMessage(loadingMessages[i]);
+      }, 2000);
+    }
+    return () => clearInterval(interval);
+  }, [isLoading]);
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     setIsLoading(true);
@@ -92,7 +113,7 @@ export function NikoFactor() {
               {isLoading ? (
                 <div className="flex flex-col items-center justify-center h-64 gap-4">
                   <Loader2 className="h-12 w-12 animate-spin text-primary" />
-                  <p className="text-muted-foreground">NIKO está analisando seus dados...</p>
+                  <p className="text-muted-foreground transition-opacity duration-500 text-center">{loadingMessage}</p>
                 </div>
               ) : strategy ? (
                 <div className="space-y-4">
