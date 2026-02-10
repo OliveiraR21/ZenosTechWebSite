@@ -1,4 +1,4 @@
-import { ZenosLogo } from "@/components/logo";
+import { LogoImage } from "@/components/logo";
 import { Instagram, Linkedin, Mail } from "lucide-react";
 
 export function Footer() {
@@ -6,7 +6,7 @@ export function Footer() {
     <footer className="w-full bg-background py-8 px-4 sm:px-6 lg:px-8 border-t border-border">
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
         <div className="flex flex-col items-center md:items-start gap-2">
-          <ZenosLogo className="h-10 w-10 text-primary" />
+          <LogoImage className="h-10 w-24" />
           <p className="font-headline text-lg uppercase tracking-wider text-muted-foreground">
             Agilidade Simples. Excelência Duradoura.
           </p>

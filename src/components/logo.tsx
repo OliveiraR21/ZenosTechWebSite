@@ -1,3 +1,6 @@
+import Image from 'next/image';
+import { cn } from '@/lib/utils';
+
 export const ZenosLogo = ({ className }: { className?: string }) => (
   <svg
     className={className}
@@ -14,4 +17,21 @@ export const ZenosLogo = ({ className }: { className?: string }) => (
       strokeLinejoin="round"
     />
   </svg>
+);
+
+export const LogoImage = ({ className }: { className?: string }) => (
+    <div className={cn("relative", className)}>
+        <Image
+            src="/zenos_sem_fundo_escuro.png"
+            fill
+            alt="Zenos Tech Logo"
+            className="dark:block hidden object-contain"
+        />
+        <Image
+            src="/zenos_sem_fundo_claro.png"
+            fill
+            alt="Zenos Tech Logo"
+            className="dark:hidden block object-contain"
+        />
+    </div>
 );

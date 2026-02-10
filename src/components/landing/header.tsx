@@ -1,37 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { useState, useEffect } from "react";
 import { ThemeToggle } from "../theme-toggle";
-import { cn } from "@/lib/utils";
+import { LogoImage } from "@/components/logo";
 
 const navLinks = [
   { href: "#manifesto", label: "Manifesto" },
   { href: "#diferenciais", label: "Diferenciais" },
   { href: "#metodologia", label: "Metodologia" },
 ];
-
-const LogoImage = ({ className }: { className?: string }) => (
-    <div className={cn("relative", className)}>
-        <Image
-            src="/zenos_sem_fundo_escuro.png"
-            fill
-            alt="Zenos Tech Logo"
-            className="dark:block hidden object-contain"
-        />
-        <Image
-            src="/zenos_sem_fundo_claro.png"
-            fill
-            alt="Zenos Tech Logo"
-            className="dark:hidden block object-contain"
-        />
-    </div>
-);
-
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
