@@ -18,14 +18,14 @@ const LogoImage = () => (
         <Image
             src="/zenos_sem_fundo_escuro.png"
             width={80}
-            height={20}
+            height={32}
             alt="Zenos Tech Logo"
             className="dark:block hidden"
         />
         <Image
             src="/zenos_sem_fundo_claro.png"
             width={80}
-            height={20}
+            height={32}
             alt="Zenos Tech Logo"
             className="dark:hidden block"
         />
