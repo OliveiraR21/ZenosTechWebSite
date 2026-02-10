@@ -12,15 +12,16 @@ export function Hero() {
 
       <div className="relative z-10 container mx-auto px-4 text-center">
         <h1 className="font-headline text-6xl md:text-8xl lg:text-9xl font-bold uppercase tracking-tighter text-foreground animate-fade-in-down">
-          A Excelência é Simples.
+          A EXCELÊNCIA É SIMPLES.
         </h1>
         <p className="mt-4 max-w-3xl mx-auto text-lg md:text-xl text-muted-foreground text-balance animate-fade-in-up">
-          Implemente o Padrão Zenos e transforme sua operação com agilidade, inovação e clareza. Feito para quem não tem tempo a perder.
+          Projetamos ecossistemas de alta performance para quem não aceita o ruído da complexidade. Profissionalize sua operação com o padrão de elite que seu negócio exige.
         </p>
-        <div className="mt-8">
+        <div className="mt-8 flex flex-col items-center gap-4">
           <Button size="lg" className="font-bold text-lg px-10 py-6">
-            Inicie sua Evolução
+            INICIAR EVOLUÇÃO AGORA
           </Button>
+          <p className="text-sm text-muted-foreground/80">Agilidade Simples. Excelência Duradoura.</p>
         </div>
       </div>
     </section>
