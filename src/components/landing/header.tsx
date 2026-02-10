@@ -29,7 +29,7 @@ export function Header() {
       <div className="container flex h-14 items-center justify-between">
         <div className="flex items-center">
           <div className="md:hidden">
-            {isMounted && (
+            {isMounted ? (
               <Sheet open={isOpen} onOpenChange={setIsOpen}>
                 <SheetTrigger asChild>
                   <Button variant="ghost" size="icon" className="mr-2">
@@ -55,6 +55,8 @@ export function Header() {
                   </nav>
                 </SheetContent>
               </Sheet>
+            ) : (
+              <div className="mr-2 h-10 w-10" />
             )}
           </div>
           
@@ -81,7 +83,7 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-2">
-          <ThemeToggle />
+          {isMounted ? <ThemeToggle /> : <div className="h-10 w-10" />}
           <Button asChild>
             <Link href={WHATSAPP_LINKS.strategist} target="_blank">FALAR COM UM ESTRATEGISTA</Link>
           </Button>
