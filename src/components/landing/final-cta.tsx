@@ -51,7 +51,7 @@ export function FinalCta() {
       <div className="container mx-auto px-4 text-center">
         <div className="max-w-3xl mx-auto space-y-6">
           <h2 className="font-headline text-5xl md:text-6xl font-bold uppercase text-primary">
-            O PRÓXIMO NÍVEL É UMA ESCOLHA SIMPLES.
+            O próximo nível é uma escolha simples.
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground text-balance">
             Deixe seu contato. Um de nossos estrategistas iniciará a conversa para agendar sua sessão.
@@ -83,8 +83,8 @@ export function FinalCta() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" size="lg" className="w-full font-bold" disabled={isSubmitting}>
-                  {isSubmitting ? "ENVIANDO..." : "AGENDAR SESSÃO ESTRATÉGICA"}
+                <Button type="submit" size="lg" className="w-full font-bold font-headline" disabled={isSubmitting}>
+                  {isSubmitting ? "ENVIANDO..." : "INICIAR DIAGNÓSTICO COM UM ESTRATEGISTA"}
                 </Button>
               </form>
             </Form>

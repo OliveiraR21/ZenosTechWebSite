@@ -1,5 +1,5 @@
 import { LogoImage } from "@/components/logo";
-import { Instagram, Linkedin, Mail } from "lucide-react";
+import { Linkedin } from "lucide-react";
 
 export function Footer() {
   return (
@@ -20,20 +20,6 @@ export function Footer() {
             rel="noopener noreferrer"
           >
             <Linkedin className="h-6 w-6" />
-          </a>
-          <a
-            href="#"
-            aria-label="Instagram"
-            className="transition-colors hover:text-primary"
-          >
-            <Instagram className="h-6 w-6" />
-          </a>
-          <a
-            href="mailto:contact@zenos.tech"
-            aria-label="Contact"
-            className="transition-colors hover:text-primary"
-          >
-            <Mail className="h-6 w-6" />
           </a>
         </div>
       </div>
