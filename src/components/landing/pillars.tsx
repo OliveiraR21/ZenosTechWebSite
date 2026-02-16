@@ -20,7 +20,7 @@ const solutions = [
     icon: Bot,
     title: "Agilidade Ágil: Zenos Response",
     description: "Atendimento inteligente que não dorme. Uma IA treinada no seu tom de voz para fechar vendas enquanto você descansa.",
-    videoSrc: "/videos/demo-response.mp4",
+    videoSrc: "/video_whatsapp.mp4",
     poster: "/placeholders/whatsapp-print.jpg",
     cta: "Ver Automação Real"
   }
@@ -86,25 +86,22 @@ export function Pillars() {
                   )}></div>
                   
                   <div className="relative rounded-xl overflow-hidden border border-border bg-card shadow-2xl aspect-video flex items-center justify-center">
-                    {/* TODO: Quando tiver os vídeos reais, descomente a tag video abaixo e remova o div placeholder.
-                       Para PMEs, vídeos do WhatsApp Web rolando ou um Dashboard limpo funcionam muito bem.
-                    */}
-                    {/* <video 
-                      src={solution.videoSrc}
-                      poster={solution.poster}
-                      autoPlay 
-                      muted 
-                      loop 
-                      playsInline
-                      className="w-full h-full object-cover"
-                    /> 
-                    */}
-                    
-                    {/* Placeholder Temporário Visual */}
-                    <div className="bg-zinc-900 w-full h-full flex flex-col items-center justify-center text-zinc-500 gap-4">
-                        <Play className="h-16 w-16 opacity-20" />
-                        <span className="text-sm uppercase tracking-widest font-headline">Demonstração: {solution.id}</span>
-                    </div>
+                    {solution.id === 'response' ? (
+                       <video 
+                        src={solution.videoSrc}
+                        poster={solution.poster}
+                        autoPlay 
+                        muted 
+                        loop 
+                        playsInline
+                        className="w-full h-full object-cover"
+                      /> 
+                    ) : (
+                      <div className="bg-zinc-900 w-full h-full flex flex-col items-center justify-center text-zinc-500 gap-4">
+                          <Play className="h-16 w-16 opacity-20" />
+                          <span className="text-sm uppercase tracking-widest font-headline">Demonstração: {solution.id}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
