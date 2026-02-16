@@ -21,7 +21,7 @@ const solutions = [
     icon: Bot,
     title: "Agilidade Ágil: Zenos Response",
     description: "Atendimento inteligente que não dorme. Uma IA treinada no seu tom de voz para fechar vendas enquanto você descansa.",
-    videoSrc: "/videos/whatsapp-demo-zenos.mp4",
+    videoSrc: "/videos/video_whatsapp.mp4",
     poster: "/placeholders/whatsapp-print.jpg",
     cta: "Ver Automação Real"
   }
