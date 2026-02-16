@@ -23,7 +23,7 @@ export function Hero() {
         <h1 className="font-headline text-5xl md:text-7xl font-bold uppercase text-foreground animate-fade-in-down tracking-wider">
           Zenos: A Sofisticação da Simplicidade.
         </h1>
-        <p className="mt-4 max-w-3xl mx-auto text-lg md:text-xl text-muted-foreground text-balance animate-fade-in-up">
+        <p style={{ animationDelay: '200ms' }} className="mt-4 max-w-3xl mx-auto text-lg md:text-xl text-muted-foreground text-balance animate-fade-in-up">
           Eliminamos o ruído operacional para que você foque no crescimento. Consultoria estratégica e automação inteligente para negócios de alta performance.
         </p>
         <div className="mt-8 flex flex-col items-center gap-4">

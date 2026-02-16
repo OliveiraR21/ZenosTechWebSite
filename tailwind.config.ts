@@ -129,7 +129,7 @@ export default {
         'accordion-up': 'accordion-up 0.2s ease-out',
         'border-glow': 'border-glow 5s ease-in-out infinite',
         'fade-in-down': 'fade-in-down 0.5s ease-out forwards',
-        'fade-in-up': 'fade-in-up 0.5s ease-out 0.2s forwards',
+        'fade-in-up': 'fade-in-up 0.5s ease-out forwards',
         'cutting-line': 'cutting-line 8s linear infinite',
       },
     },
