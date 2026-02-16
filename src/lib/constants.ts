@@ -6,4 +6,5 @@ export const WHATSAPP_LINKS = {
   response: `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Olá, quero saber mais sobre o Zenos Response.")}`,
   strategist: `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Olá, gostaria de falar com um estrategista.")}`,
   strategicSession: `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Olá, gostaria de agendar uma sessão estratégica.")}`,
+  efficiencyDiagnosis: `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Olá, gostaria de agendar um Diagnóstico de Eficiência.")}`,
 };
