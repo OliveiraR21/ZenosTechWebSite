@@ -11,18 +11,15 @@ const solutions = [
     icon: ClipboardList,
     title: "Visão Limpa: Zenos Advisory",
     description: "Diagnóstico estratégico para eliminar processos inúteis. Não automatizamos o caos; nós o organizamos primeiro.",
-    // Placeholder para o vídeo. Substitua 'src' pelo caminho real do seu vídeo mp4
-    videoSrc: "/videos/demo-advisory.mp4", 
-    poster: "/placeholders/dashboard-print.jpg", // Uma imagem estática enquanto o vídeo carrega
-    cta: "Ver Diagnóstico Exemplo"
+    videoSrc: "/video_hero.mp4", // Usando o vídeo da hero como textura técnica
+    cta: "Agendar Diagnóstico"
   },
   {
     id: "response",
     icon: Bot,
     title: "Agilidade Ágil: Zenos Response",
     description: "Atendimento inteligente que não dorme. Uma IA treinada no seu tom de voz para fechar vendas enquanto você descansa.",
-    videoSrc: "/video_whatsapp.mp4",
-    poster: "/placeholders/whatsapp-print.jpg",
+    videoSrc: "/video_whatsapp.mp4", 
     cta: "Ver Automação Real"
   }
 ];
@@ -42,91 +39,86 @@ export function Pillars() {
           </div>
         </AnimationWrapper>
 
-        <div className="flex flex-col gap-24 relative">
-          {/* Elemento decorativo de fundo formando um Z sutil (Opcional) */}
-          <div className="absolute inset-0 pointer-events-none hidden md:block">
-             <div className="absolute top-1/4 left-1/4 w-[2px] h-1/2 bg-gradient-to-b from-transparent via-primary/20 to-transparent -skew-x-12" />
-          </div>
-
+        <div className="flex flex-col gap-32 relative">
           {solutions.map((solution, index) => {
             const isEven = index % 2 === 0;
             return (
-              <AnimationWrapper key={solution.id} delay={isEven ? 200 : 350}>
-                <div 
-                  className={cn(
-                    "flex flex-col md:flex-row items-center gap-8 md:gap-16",
-                    !isEven && "md:flex-row-reverse" // Aqui cria o efeito Zig-Zag (Z)
-                  )}
-                >
+              <AnimationWrapper key={solution.id} delay={index * 150}>
+                <div className={cn(
+                    "flex flex-col md:flex-row items-center gap-12 md:gap-20",
+                    !isEven && "md:flex-row-reverse"
+                )}>
                   {/* Coluna de Texto */}
                   <div className="flex-1 space-y-6 text-center md:text-left">
-                    <div className={cn(
-                      "inline-flex p-3 rounded-xl bg-primary/10 mb-2",
-                      !isEven && "md:ml-auto" // Alinha icone se necessário
-                    )}>
+                    <div className={cn("inline-flex p-3 rounded-xl bg-primary/10 mb-2", !isEven && "md:ml-0")}>
                       <solution.icon className="h-8 w-8 text-primary" />
                     </div>
-                    
-                    <h3 className="font-headline text-3xl md:text-4xl uppercase tracking-wider text-foreground">
+                    <h3 className="font-headline text-4xl md:text-5xl uppercase tracking-wider text-foreground">
                       {solution.title}
                     </h3>
-                    <p className="text-lg text-muted-foreground leading-relaxed text-balance">
+                    <p className="text-xl text-muted-foreground leading-relaxed">
                       {solution.description}
                     </p>
-                    
-                    <Button variant="outline" className="group border-primary/50 hover:bg-primary hover:text-primary-foreground">
-                      <Play className="mr-2 h-4 w-4 fill-current group-hover:fill-primary-foreground" /> 
+                    <Button variant="outline" className="group border-primary/50 hover:bg-primary hover:text-black font-bold">
+                      <Play className="mr-2 h-4 w-4 fill-current" /> 
                       {solution.cta}
                     </Button>
                   </div>
 
-                  {/* Coluna de Vídeo/Demo */}
-                  <div className="flex-1 w-full relative group">
-                    <div className={cn(
-                      "absolute -inset-1 bg-gradient-to-r from-primary to-primary/20 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200",
-                      isEven ? "-rotate-1" : "rotate-1"
-                    )}></div>
-                    
-                    <div className="relative rounded-xl overflow-hidden border border-border bg-card shadow-2xl aspect-video flex items-center justify-center">
-                      {solution.id === 'response' ? (
-                        <>
-                          <video 
-                            src={solution.videoSrc}
-                            className="w-full h-full object-cover"
-                            autoPlay 
-                            muted 
-                            loop 
-                            playsInline
-                            onCanPlay={(e) => e.currentTarget.play()}
-                          />
+                  {/* Coluna do Vídeo com Overlay de Chat */}
+                  <div className="flex-1 w-full relative">
+                    <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-black aspect-video shadow-[0_0_50px_-12px_rgba(204,255,0,0.3)]">
+                      
+                      {/* O VÍDEO (Agora como fundo abstrato) */}
+                      <video 
+                        src={solution.videoSrc}
+                        className="w-full h-full object-cover opacity-40 blur-[2px] grayscale-[0.5]"
+                        autoPlay muted loop playsInline
+                      />
 
-                          {/* --- CAMADAS DE OFUSCAÇÃO AJUSTADAS --- */}
-
-                          {/* 1. Esconde o Título do topo "WhatapAl Zenos Web" */}
-                          <div className="absolute top-[3%] left-[25%] w-[40%] h-[8%] bg-black/40 backdrop-blur-xl z-10 pointer-events-none"></div>
-
-                          {/* 2. Blur na mensagem da Esquerda (Cliente) */}
-                          <div className="absolute top-[35%] left-[10%] w-[50%] h-[15%] bg-black/20 backdrop-blur-lg rounded-lg z-10 pointer-events-none"></div>
-
-                          {/* 3. Blur na mensagem da Direita (Resposta IA) */}
-                          <div className="absolute top-[52%] right-[10%] w-[55%] h-[20%] bg-black/20 backdrop-blur-lg rounded-lg z-10 pointer-events-none"></div>
-
-                          {/* 4. Esconde o Popup central "Meeting Confirfned" que aparece no final */}
-                          <div className="absolute top-[40%] left-[30%] w-[40%] h-[15%] bg-black/60 backdrop-blur-2xl rounded-full z-15 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center border border-primary/20">
-                            <span className="text-primary text-[10px] uppercase font-bold tracking-tighter">Sessão Agendada</span>
+                      {/* INTERFACE DE CHAT EM PORTUGUÊS (Sobreposta) */}
+                      {solution.id === 'response' && (
+                        <div className="absolute inset-0 p-6 flex flex-col justify-center gap-4">
+                          {/* Mensagem do Cliente */}
+                          <div className="bg-zinc-800/90 backdrop-blur-md p-3 rounded-2xl rounded-bl-none max-w-[80%] border border-white/5 animate-fade-in-up">
+                            <p className="text-xs text-zinc-400 mb-1">Cliente</p>
+                            <p className="text-sm text-white">Olá! Gostaria de saber os valores da consultoria.</p>
                           </div>
 
-                          {/* 5. Overlay de Contexto em Português */}
-                          <div className="absolute top-4 left-4 z-20 bg-background/80 backdrop-blur text-[10px] font-bold text-primary px-3 py-1 rounded-full border border-primary/20 flex items-center gap-2 animate-pulse">
-                            <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
-                            ZENOS ENGINE: ATIVA
+                          {/* Resposta da IA Zenos */}
+                          <div className="bg-primary/20 backdrop-blur-md p-3 rounded-2xl rounded-br-none max-w-[80%] self-end border border-primary/30 animate-fade-in-up [animation-delay:1s]">
+                            <p className="text-[10px] font-bold text-primary uppercase mb-1 flex items-center gap-1">
+                              <div className="w-1 h-1 bg-primary rounded-full animate-pulse" />
+                              NIKO AI • Zenos
+                            </p>
+                            <p className="text-sm text-white">Com certeza! Para PMEs, temos o plano Advisory que foca em escala. Posso agendar seu diagnóstico hoje?</p>
                           </div>
-                        </>
-                      ) : (
-                        /* Placeholder para a outra solução (Advisory) */
-                        <div className="bg-zinc-900 w-full h-full flex flex-col items-center justify-center text-zinc-500 gap-4">
-                            <Play className="h-16 w-16 opacity-20" />
-                            <span className="text-sm uppercase tracking-widest font-headline">Demonstração: {solution.id}</span>
+
+                          {/* Badge de Status */}
+                          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 border border-primary/40 px-3 py-1 rounded-full flex items-center gap-2">
+                             <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
+                             <span className="text-[10px] font-bold text-white uppercase tracking-tighter">Automação Ativa</span>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Overlay para Advisory (Exemplo de Dashboard) */}
+                      {solution.id === 'advisory' && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-[1px]">
+                           <div className="bg-background/90 border border-white/10 p-4 rounded-xl shadow-2xl scale-90 md:scale-100">
+                              <div className="flex items-center gap-4 mb-4 border-b border-white/10 pb-2">
+                                 <div className="h-8 w-8 rounded bg-primary/20 flex items-center justify-center text-primary font-bold">Z</div>
+                                 <div className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Relatório de Eficiência</div>
+                              </div>
+                              <div className="space-y-2">
+                                 <div className="h-2 w-32 bg-zinc-700 rounded animate-pulse" />
+                                 <div className="h-2 w-48 bg-primary/40 rounded animate-pulse" />
+                                 <div className="flex gap-2 pt-2">
+                                    <div className="h-8 w-16 bg-zinc-800 rounded border border-white/5" />
+                                    <div className="h-8 w-16 bg-zinc-800 rounded border border-white/5" />
+                                 </div>
+                              </div>
+                           </div>
                         </div>
                       )}
                     </div>
