@@ -19,7 +19,7 @@ export default function Home() {
         <section id="diferenciais">
           <Pillars />
         </section>
-        <section id="metodologia">
+        <section id="especialista">
           <NikoFactor />
         </section>
         <SocialProof />

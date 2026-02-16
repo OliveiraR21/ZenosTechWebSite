@@ -12,7 +12,7 @@ import { WHATSAPP_LINKS } from "@/lib/constants";
 const navLinks = [
   { href: "/#manifesto", label: "Manifesto" },
   { href: "/#diferenciais", label: "Diferenciais" },
-  { href: "/#metodologia", label: "Metodologia" },
+  { href: "/#especialista", label: "Especialista" },
   { href: "/solucoes", label: "Soluções" },
 ];
 

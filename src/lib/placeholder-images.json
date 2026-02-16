@@ -17,6 +17,12 @@
       "description": "A smartphone with the WhatsApp application open, showing an automated conversation.",
       "imageUrl": "https://images.unsplash.com/photo-1633355444132-695d5876cd00?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx3aGF0c2FwcCUyMGF1dG9tYXRpb258ZW58MHx8fHwxNzA5Njc1NzMwfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "whatsapp automation"
+    },
+    {
+      "id": "renan-oliveira-portrait",
+      "description": "Black and white, high-contrast portrait of Renan Oliveira, founder of Zenos Tech.",
+      "imageUrl": "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=1080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "man portrait"
     }
   ]
 }

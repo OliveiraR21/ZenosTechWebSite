@@ -1,166 +1,64 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import Image from "next/image";
-import { Loader2, BrainCircuit, Sparkles, RefreshCw } from "lucide-react";
+import Link from "next/link";
+import { Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useToast } from "@/hooks/use-toast";
-import { generateStrategyAction } from "@/app/actions";
-import nikoImageData from "@/lib/placeholder-images.json";
+import { Card } from "@/components/ui/card";
+import { ZenosLogo } from "@/components/logo";
+import imageData from "@/lib/placeholder-images.json";
 
-const formSchema = z.object({
-  businessData: z
-    .string()
-    .min(50, { message: "Por favor, forneça pelo menos 50 caracteres sobre seu negócio." })
-    .max(5000, { message: "A entrada não pode exceder 5000 caracteres." }),
-});
-
-type FormValues = z.infer<typeof formSchema>;
-
-const nikoImage = nikoImageData.placeholderImages.find(img => img.id === 'niko-tactical');
-
-const loadingMessages = [
-    "Analisando mercado...",
-    "Identificando gargalos...",
-    "Formulando estratégia...",
-    "Cruzando dados de performance...",
-    "Buscando insights de crescimento...",
-];
+const renanImage = imageData.placeholderImages.find(img => img.id === 'renan-oliveira-portrait');
 
 export function NikoFactor() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [strategy, setStrategy] = useState<string | null>(null);
-  const [loadingMessage, setLoadingMessage] = useState(loadingMessages[0]);
-  const { toast } = useToast();
-
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: { businessData: "" },
-  });
-
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (isLoading) {
-      let i = 0;
-      interval = setInterval(() => {
-        i = (i + 1) % loadingMessages.length;
-        setLoadingMessage(loadingMessages[i]);
-      }, 2000);
-    }
-    return () => clearInterval(interval);
-  }, [isLoading]);
-
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    setIsLoading(true);
-    setStrategy(null);
-    const result = await generateStrategyAction(data);
-    setIsLoading(false);
-
-    if (result.success && result.strategy) {
-      setStrategy(result.strategy);
-    } else {
-      toast({
-        variant: "destructive",
-        title: "Erro de IA",
-        description: result.error,
-      });
-    }
-  };
-  
-  const handleReset = () => {
-    setStrategy(null);
-    form.reset();
-  }
-
   return (
     <section className="w-full bg-card py-20 sm:py-24">
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-4">
-            <h2 className="font-headline text-5xl md:text-6xl font-bold uppercase text-primary">O Fator NIKO</h2>
-            <p className="text-lg text-muted-foreground text-balance">
-              Um estrategista ao seu lado. O NIKO garante que sua operação mantenha o ritmo de elite, simplificando o dia a dia e apontando o caminho para a escala.
-            </p>
-            {nikoImage && (
-                <div className="relative aspect-[4/3] rounded-lg overflow-hidden mt-8 shadow-2xl shadow-black/50">
-                    <Image
-                        src={nikoImage.imageUrl}
-                        alt={nikoImage.description}
-                        fill
-                        className="object-cover"
-                        data-ai-hint={nikoImage.imageHint}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent"></div>
-                </div>
-            )}
-          </div>
-
-          <Card className="bg-background/50 border-border shadow-lg">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <BrainCircuit className="h-8 w-8 text-primary" />
-                <CardTitle className="text-2xl font-headline tracking-wider">Seu Mentor Estratégico de IA</CardTitle>
-              </div>
-              <CardDescription>Descreva seu negócio e desafios para receber uma estratégia de NIKO.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              {isLoading ? (
-                <div className="flex flex-col items-center justify-center h-64 gap-4">
-                  <Loader2 className="h-12 w-12 animate-spin text-primary" />
-                  <p className="text-muted-foreground transition-opacity duration-500 text-center">{loadingMessage}</p>
-                </div>
-              ) : strategy ? (
-                <div className="space-y-4">
-                    <div className="flex items-center gap-3 text-primary">
-                        <Sparkles className="h-6 w-6" />
-                        <h3 className="text-xl font-headline tracking-wider">Sua Estratégia Zenos</h3>
-                    </div>
-                  <div className="p-4 bg-card rounded-md border border-border/50 max-h-64 overflow-y-auto">
-                    <p className="whitespace-pre-wrap text-foreground">{strategy}</p>
-                  </div>
-                  <Button onClick={handleReset} variant="outline" className="w-full">
-                    <RefreshCw className="mr-2 h-4 w-4" />
-                    Gerar Nova Estratégia
-                  </Button>
-                </div>
-              ) : (
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                    <FormField
-                      control={form.control}
-                      name="businessData"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-muted-foreground">Dados do Negócio & Desafios de Escala</FormLabel>
-                          <FormControl>
-                            <Textarea
-                              placeholder="Descreva suas operações atuais, métricas de desempenho e desafios de escala..."
-                              className="min-h-[150px] bg-card"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <Button type="submit" className="w-full font-bold" disabled={isLoading}>
-                      {isLoading ? (
-                        <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Gerando...</>
-                      ) : (
-                        'Obter Estratégia'
-                      )}
-                    </Button>
-                  </form>
-                </Form>
-              )}
-            </CardContent>
+        <div className="text-center mb-12">
+            <h2 className="font-headline text-5xl md:text-6xl font-bold uppercase text-foreground">A Voz do Especialista</h2>
+        </div>
+        <div className="grid md:grid-cols-2 gap-8 items-stretch">
+          
+          {/* Lado A (NIKO) */}
+          <Card className="flex flex-col items-center justify-center p-8 bg-background/50 border-primary/20 hover:border-primary/50 transition-colors duration-300">
+            <div className="relative w-24 h-24 mb-6">
+                <div className="absolute inset-0 bg-primary/10 rounded-full animate-pulse"></div>
+                <div className="absolute inset-2 bg-card rounded-full"></div>
+                <ZenosLogo className="relative w-full h-full p-6 text-primary" />
+            </div>
+            <div className="text-center">
+              <p className="font-headline text-2xl uppercase tracking-wider text-primary mb-2">NIKO</p>
+              <blockquote className="text-xl text-foreground text-balance">
+                "A inovação começa quando limpamos a visão. Vamos eliminar o que não traz lucro?"
+              </blockquote>
+            </div>
           </Card>
+
+          {/* Lado B (Renan Oliveira) */}
+          {renanImage && (
+            <Card className="flex flex-col md:flex-row items-center gap-6 p-8 bg-background/50 border-border/50">
+              <div className="relative w-32 h-32 md:w-40 md:h-40 shrink-0 rounded-full overflow-hidden shadow-lg border-4 border-card">
+                  <Image
+                      src={renanImage.imageUrl}
+                      alt={renanImage.description}
+                      fill
+                      className="object-cover"
+                      data-ai-hint={renanImage.imageHint}
+                  />
+              </div>
+              <div className="text-center md:text-left">
+                <h3 className="font-headline text-2xl uppercase tracking-wider text-foreground">Renan Oliveira</h3>
+                <p className="text-sm font-semibold text-primary mb-2">Fundador & Estrategista Chefe</p>
+                <p className="text-muted-foreground mb-4 text-balance">
+                  Liderado por Renan, a Zenos une visão estratégica e execução técnica para criar soluções que simplificam a gestão.
+                </p>
+                <Button variant="outline" size="sm" asChild>
+                  <Link href="#" target="_blank">
+                    <Linkedin className="mr-2" />
+                    LinkedIn
+                  </Link>
+                </Button>
+              </div>
+            </Card>
+          )}
         </div>
       </div>
     </section>
