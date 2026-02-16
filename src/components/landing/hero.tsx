@@ -16,7 +16,7 @@ export function Hero() {
         >
           <source src="/video_hero.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-background/60 backdrop-blur-[2px]" />
       </div>
 
       <div className="relative z-10 container mx-auto px-4 text-center">
