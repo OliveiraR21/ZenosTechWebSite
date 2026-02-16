@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { ZenosLogo } from "@/components/logo";
 import imageData from "@/lib/placeholder-images.json";
 
@@ -12,43 +11,28 @@ export function NikoFactor() {
   return (
     <section className="w-full bg-card py-20 sm:py-24">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-            <h2 className="font-headline text-5xl md:text-6xl font-bold uppercase text-foreground">A Voz do Especialista</h2>
+        <div className="text-center mb-16">
+            <h2 className="font-headline text-5xl md:text-6xl font-bold uppercase text-foreground">Onde a Estratégia encontra a Execução.</h2>
         </div>
-        <div className="grid md:grid-cols-2 gap-8 items-stretch">
+        <div className="grid md:grid-cols-5 gap-12 items-center max-w-6xl mx-auto">
           
-          {/* Lado A (NIKO) */}
-          <Card className="flex flex-col items-center justify-center p-8 bg-background/50 border-primary/20 hover:border-primary/50 transition-colors duration-300">
-            <div className="relative w-24 h-24 mb-6">
-                <div className="absolute inset-0 bg-primary/10 rounded-full animate-pulse"></div>
-                <div className="absolute inset-2 bg-card rounded-full"></div>
-                <ZenosLogo className="relative w-full h-full p-6 text-primary" />
-            </div>
-            <div className="text-center">
-              <p className="font-headline text-2xl uppercase tracking-wider text-primary mb-2">NIKO</p>
-              <blockquote className="text-xl text-foreground text-balance">
-                "A inovação começa quando limpamos a visão. Vamos eliminar o que não traz lucro?"
-              </blockquote>
-            </div>
-          </Card>
-
-          {/* Lado B (Renan Oliveira) */}
+          {/* Lado A (Renan Oliveira) */}
           {renanImage && (
-            <Card className="flex flex-col md:flex-row items-center gap-6 p-8 bg-background/50 border-border/50">
-              <div className="relative w-32 h-32 md:w-40 md:h-40 shrink-0 rounded-full overflow-hidden shadow-lg border-4 border-card">
+            <div className="md:col-span-3 flex flex-col sm:flex-row items-center text-center sm:text-left gap-6 md:gap-8">
+              <div className="relative w-40 h-40 sm:w-48 sm:h-48 shrink-0 rounded-full overflow-hidden shadow-lg border-4 border-background">
                   <Image
                       src={renanImage.imageUrl}
                       alt={renanImage.description}
                       fill
-                      className="object-cover"
+                      className="object-cover filter grayscale contrast-125"
                       data-ai-hint={renanImage.imageHint}
                   />
               </div>
-              <div className="text-center md:text-left">
-                <h3 className="font-headline text-2xl uppercase tracking-wider text-foreground">Renan Oliveira</h3>
-                <p className="text-sm font-semibold text-primary mb-2">Fundador & Estrategista Chefe</p>
+              <div>
+                <h3 className="font-headline text-3xl uppercase tracking-wider text-foreground">Renan Oliveira</h3>
+                <p className="text-sm font-semibold text-primary mb-3">Fundador & Estrategista Chefe</p>
                 <p className="text-muted-foreground mb-4 text-balance">
-                  Liderado por Renan, a Zenos une visão estratégica e execução técnica para criar soluções que simplificam a gestão.
+                  Liderado por Renan Oliveira, engenheiro focado em eficiência, a Zenos nasceu para provar que a tecnologia deve ser poderosa ao usar e simples ao entender.
                 </p>
                 <Button variant="outline" size="sm" asChild>
                   <Link href="https://www.linkedin.com/in/oliveira-renan/" target="_blank">
@@ -57,8 +41,21 @@ export function NikoFactor() {
                   </Link>
                 </Button>
               </div>
-            </Card>
+            </div>
           )}
+
+          {/* Lado B (NIKO) */}
+          <div className="md:col-span-2 flex items-start gap-4 animate-fade-in-up">
+             <div className="relative w-16 h-16 shrink-0 mt-2">
+                <ZenosLogo className="relative w-full h-full p-4 text-primary" />
+            </div>
+            <div className="relative bg-background rounded-lg p-6 shadow-lg">
+               <div className="absolute top-6 -left-2 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-r-background"></div>
+               <blockquote className="text-lg text-foreground/90 text-balance font-medium">
+                "Vamos eliminar o que não traz lucro? A inovação começa quando limpamos a visão."
+              </blockquote>
+            </div>
+          </div>
         </div>
       </div>
     </section>
