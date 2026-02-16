@@ -21,7 +21,7 @@ const solutions = [
     icon: Bot,
     title: "Agilidade Ágil: Zenos Response",
     description: "Atendimento inteligente que não dorme. Uma IA treinada no seu tom de voz para fechar vendas enquanto você descansa.",
-    videoSrc: "/videos/video_whatsapp.mp4",
+    videoSrc: "/video_whatsapp.mp4",
     poster: "/placeholders/whatsapp-print.jpg",
     cta: "Ver Automação Real"
   }
@@ -82,7 +82,6 @@ export function Pillars() {
 
                   {/* Coluna de Vídeo/Demo */}
                   <div className="flex-1 w-full relative group">
-                    {/* Moldura Neon Estilizada */}
                     <div className={cn(
                       "absolute -inset-1 bg-gradient-to-r from-primary to-primary/20 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200",
                       isEven ? "-rotate-1" : "rotate-1"
@@ -98,23 +97,33 @@ export function Pillars() {
                             muted 
                             loop 
                             playsInline
+                            onCanPlay={(e) => e.currentTarget.play()}
                           />
 
-                          {/* --- CAMADAS DE OFUSCAÇÃO (O "TRUQUE") --- */}
+                          {/* --- CAMADAS DE OFUSCAÇÃO AJUSTADAS --- */}
 
-                          {/* 1. Blur na mensagem de entrada (Cliente) */}
-                          <div className="absolute top-[22%] left-[12%] w-[65%] h-[15%] bg-black/10 backdrop-blur-md rounded-lg z-10 pointer-events-none mix-blend-overlay"></div>
+                          {/* 1. Esconde o Título do topo "WhatapAl Zenos Web" */}
+                          <div className="absolute top-[3%] left-[25%] w-[40%] h-[8%] bg-black/40 backdrop-blur-xl z-10 pointer-events-none"></div>
 
-                          {/* 2. Blur na mensagem de saída (NIKO/Zenos) */}
-                          <div className="absolute bottom-[28%] right-[12%] w-[65%] h-[22%] bg-black/10 backdrop-blur-md rounded-lg z-10 pointer-events-none mix-blend-overlay"></div>
+                          {/* 2. Blur na mensagem da Esquerda (Cliente) */}
+                          <div className="absolute top-[35%] left-[10%] w-[50%] h-[15%] bg-black/20 backdrop-blur-lg rounded-lg z-10 pointer-events-none"></div>
 
-                          {/* 3. Overlay de Contexto em Português */}
-                          <div className="absolute top-4 left-4 z-20 bg-background/80 backdrop-blur text-xs font-bold text-primary px-3 py-1 rounded-full border border-primary/20 flex items-center gap-2 animate-pulse">
-                            <div className="w-2 h-2 bg-primary rounded-full"></div>
-                            IA Ativa: Respondendo em PT-BR
+                          {/* 3. Blur na mensagem da Direita (Resposta IA) */}
+                          <div className="absolute top-[52%] right-[10%] w-[55%] h-[20%] bg-black/20 backdrop-blur-lg rounded-lg z-10 pointer-events-none"></div>
+
+                          {/* 4. Esconde o Popup central "Meeting Confirfned" que aparece no final */}
+                          <div className="absolute top-[40%] left-[30%] w-[40%] h-[15%] bg-black/60 backdrop-blur-2xl rounded-full z-15 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center border border-primary/20">
+                            <span className="text-primary text-[10px] uppercase font-bold tracking-tighter">Sessão Agendada</span>
+                          </div>
+
+                          {/* 5. Overlay de Contexto em Português */}
+                          <div className="absolute top-4 left-4 z-20 bg-background/80 backdrop-blur text-[10px] font-bold text-primary px-3 py-1 rounded-full border border-primary/20 flex items-center gap-2 animate-pulse">
+                            <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
+                            ZENOS ENGINE: ATIVA
                           </div>
                         </>
                       ) : (
+                        /* Placeholder para a outra solução (Advisory) */
                         <div className="bg-zinc-900 w-full h-full flex flex-col items-center justify-center text-zinc-500 gap-4">
                             <Play className="h-16 w-16 opacity-20" />
                             <span className="text-sm uppercase tracking-widest font-headline">Demonstração: {solution.id}</span>
