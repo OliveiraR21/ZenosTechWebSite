@@ -51,7 +51,7 @@ export function NikoFactor() {
                   Liderado por Renan, a Zenos une visão estratégica e execução técnica para criar soluções que simplificam a gestão.
                 </p>
                 <Button variant="outline" size="sm" asChild>
-                  <Link href="#" target="_blank">
+                  <Link href="https://www.linkedin.com/in/oliveira-renan/" target="_blank">
                     <Linkedin className="mr-2" />
                     LinkedIn
                   </Link>
