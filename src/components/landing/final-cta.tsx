@@ -9,7 +9,6 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
-import { generateStrategyAction } from "@/app/actions";
 import { AnimationWrapper } from "@/components/animation-wrapper";
 
 const formSchema = z.object({
