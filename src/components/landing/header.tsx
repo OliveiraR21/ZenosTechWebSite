@@ -84,7 +84,7 @@ export function Header() {
         <div className="flex items-center gap-2">
           {isMounted ? <ThemeToggle /> : <div className="h-10 w-10" />}
           <Button asChild>
-            <Link href={WHATSAPP_LINKS.strategist} target="_blank">FALAR COM UM ESTRATEGISTA</Link>
+            <Link href={WHATSAPP_LINKS.strategist} target="_blank">FALE CONOSCO</Link>
           </Button>
         </div>
       </div>
