@@ -13,9 +13,11 @@ export function Footer() {
         </div>
         <div className="flex items-center gap-6 text-muted-foreground">
           <a
-            href="#"
+            href="https://www.linkedin.com/in/oliveira-renan/"
             aria-label="LinkedIn"
             className="transition-colors hover:text-primary"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <Linkedin className="h-6 w-6" />
           </a>
@@ -36,7 +38,7 @@ export function Footer() {
         </div>
       </div>
       <div className="container mx-auto mt-6 text-center text-sm text-muted-foreground/50">
-        <p>&copy; {new Date().getFullYear()} Zenos Tech. Todos os direitos reservados.</p>
+        <p>&copy; {new Date().getFullYear()} Zenos Tech | Se não for simples, não é inteligente.</p>
       </div>
     </footer>
   );
