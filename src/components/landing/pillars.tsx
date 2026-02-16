@@ -71,8 +71,8 @@ export function Pillars() {
                     {solution.description}
                   </p>
                   
-                  <Button variant="outline" className="group border-primary/50 hover:bg-primary hover:text-black">
-                    <Play className="mr-2 h-4 w-4 fill-current group-hover:fill-black" /> 
+                  <Button variant="outline" className="group border-primary/50 hover:bg-primary hover:text-primary-foreground">
+                    <Play className="mr-2 h-4 w-4 fill-current group-hover:fill-primary-foreground" /> 
                     {solution.cta}
                   </Button>
                 </div>
@@ -87,15 +87,23 @@ export function Pillars() {
                   
                   <div className="relative rounded-xl overflow-hidden border border-border bg-card shadow-2xl aspect-video flex items-center justify-center">
                     {solution.id === 'response' ? (
-                       <video 
-                        src={solution.videoSrc}
-                        poster={solution.poster}
-                        autoPlay 
-                        muted 
-                        loop 
-                        playsInline
-                        className="w-full h-full object-cover"
-                      /> 
+                      <>
+                        <video 
+                          src={solution.videoSrc} 
+                          autoPlay muted loop playsInline 
+                          className="w-full h-full object-cover opacity-50 grayscale"
+                        />
+                        
+                        {/* Overlay em Português */}
+                        <div className="absolute inset-0 flex flex-col justify-center items-center bg-black/40 p-4 text-center">
+                          <div className="bg-primary/90 text-primary-foreground font-bold px-3 py-1 rounded-full text-xs uppercase mb-2 animate-bounce">
+                            Processamento em Tempo Real
+                          </div>
+                          <div className="bg-background/80 backdrop-blur-md border border-primary/30 p-3 rounded-lg shadow-2xl max-w-[80%]">
+                            <p className="text-sm font-medium text-foreground">"Simulando resposta inteligente baseada no tom de voz do cliente..."</p>
+                          </div>
+                        </div>
+                      </>
                     ) : (
                       <div className="bg-zinc-900 w-full h-full flex flex-col items-center justify-center text-zinc-500 gap-4">
                           <Play className="h-16 w-16 opacity-20" />
