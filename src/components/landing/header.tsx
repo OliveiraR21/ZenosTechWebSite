@@ -13,7 +13,6 @@ const navLinks = [
   { href: "/#manifesto", label: "Manifesto" },
   { href: "/#diferenciais", label: "Diferenciais" },
   { href: "/#especialista", label: "Especialista" },
-  { href: "/solucoes", label: "Soluções" },
 ];
 
 export function Header() {
