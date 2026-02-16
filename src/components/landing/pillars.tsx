@@ -87,10 +87,10 @@ export function Pillars() {
 
                           {/* Resposta da IA Zenos */}
                           <div className="bg-primary/20 backdrop-blur-md p-3 rounded-2xl rounded-br-none max-w-[80%] self-end border border-primary/30 animate-fade-in-up [animation-delay:1s]">
-                            <p className="text-[10px] font-bold text-primary uppercase mb-1 flex items-center gap-1">
+                            <div className="text-[10px] font-bold text-primary uppercase mb-1 flex items-center gap-1">
                               <div className="w-1 h-1 bg-primary rounded-full animate-pulse" />
                               NIKO AI • Zenos
-                            </p>
+                            </div>
                             <p className="text-sm text-white">Com certeza! Para PMEs, temos o plano Advisory que foca em escala. Posso agendar seu diagnóstico hoje?</p>
                           </div>
 
