@@ -5,8 +5,18 @@ import { WHATSAPP_LINKS } from "@/lib/constants";
 export function Hero() {
   return (
     <section className="relative w-full h-[90vh] min-h-[700px] flex items-center justify-center overflow-hidden bg-background py-20">
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 h-px w-[400%] animate-cutting-line origin-center bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+      <div className="absolute inset-0 z-0">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="w-full h-full object-cover"
+        >
+          <source src="/video_hero.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-black/60" />
       </div>
 
       <div className="relative z-10 container mx-auto px-4 text-center">
