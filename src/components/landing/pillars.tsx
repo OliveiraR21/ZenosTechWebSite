@@ -1,21 +1,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Zap, Infinity, Eye } from "lucide-react";
+import { Bot, ClipboardList } from "lucide-react";
 
-const pillars = [
+const solutions = [
   {
-    icon: Zap,
-    title: "Agilidade Simples",
-    description: "Soluções desenhadas para serem implementadas sem fricção. Inovação que não gera dúvida."
+    icon: Bot,
+    title: "Automação de Atendimento",
+    description: "Atendimento ágil, simples e intuitivo. Transformamos conversas em dados e vendas em tempo real."
   },
   {
-    icon: Infinity,
-    title: "Inovação Duradoura",
-    description: "Tecnologia que acompanha o crescimento do seu negócio, da fase autônoma à escala de PME."
-  },
-  {
-    icon: Eye,
-    title: "Visão Limpa",
-    description: "Interfaces e processos intuitivos. Seus dados organizados para decisões precisas."
+    icon: ClipboardList,
+    title: "Consultoria Estratégica",
+    description: "Eliminamos o ruído dos seus processos. Se não for simples e duradouro, não é Zenos."
   }
 ];
 
@@ -24,20 +19,20 @@ export function Pillars() {
     <section className="w-full bg-background py-20 sm:py-24">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-            <h2 className="font-headline text-5xl md:text-6xl font-bold uppercase text-foreground">Os Três Pilares</h2>
-            <p className="mt-2 text-lg text-muted-foreground">A base do Padrão Zenos.</p>
+            <h2 className="font-headline text-5xl md:text-6xl font-bold uppercase text-foreground">O Arquiteto da Eficiência</h2>
+            <p className="mt-2 text-lg text-muted-foreground">Soluções focadas em remover a fricção do seu dia a dia.</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {pillars.map((pillar, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          {solutions.map((solution, index) => (
             <Card key={index} className="bg-card border-border/50 text-center hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 transform hover:-translate-y-2">
               <CardHeader className="items-center">
                 <div className="p-4 bg-primary/10 rounded-full mb-4">
-                  <pillar.icon className="h-8 w-8 text-primary" />
+                  <solution.icon className="h-8 w-8 text-primary" />
                 </div>
-                <CardTitle className="font-headline text-2xl uppercase tracking-wider">{pillar.title}</CardTitle>
+                <CardTitle className="font-headline text-2xl uppercase tracking-wider">{solution.title}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">{pillar.description}</p>
+                <p className="text-muted-foreground">{solution.description}</p>
               </CardContent>
             </Card>
           ))}
