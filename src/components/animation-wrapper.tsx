@@ -6,8 +6,6 @@ import { cn } from '@/lib/utils';
 type AnimationWrapperProps = {
   children: ReactNode;
   className?: string;
-  hiddenClass?: string;
-  animationClass?: string;
   delay?: number; // in ms
   triggerOnce?: boolean;
   threshold?: number;
@@ -16,8 +14,6 @@ type AnimationWrapperProps = {
 export function AnimationWrapper({
   children,
   className,
-  hiddenClass = 'opacity-0',
-  animationClass = 'animate-fade-in-up',
   delay = 0,
   triggerOnce = true,
   threshold = 0.1,
@@ -51,8 +47,12 @@ export function AnimationWrapper({
   return (
     <div
       ref={ref}
-      className={cn(className, isInView ? animationClass : hiddenClass)}
-      style={{ animationDelay: `${delay}ms` }}
+      className={cn(
+        'transition-all duration-500 ease-out',
+        isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5',
+        className
+      )}
+      style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
     </div>
