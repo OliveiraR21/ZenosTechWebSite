@@ -118,14 +118,19 @@ export default {
             opacity: '1',
             transform: 'translateY(0)'
           }
-        }
+        },
+        'cutting-line': {
+          '0%': { transform: 'translate(-50%, -50%) rotate(-45deg) translateX(-150%)' },
+          '100%': { transform: 'translate(-50%, -50%) rotate(-45deg) translateX(150%)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'border-glow': 'border-glow 5s ease-in-out infinite',
         'fade-in-down': 'fade-in-down 0.5s ease-out forwards',
-        'fade-in-up': 'fade-in-up 0.5s ease-out 0.2s forwards'
+        'fade-in-up': 'fade-in-up 0.5s ease-out 0.2s forwards',
+        'cutting-line': 'cutting-line 8s linear infinite',
       },
     },
   },
