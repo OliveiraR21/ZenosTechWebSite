@@ -166,7 +166,7 @@ export function NikoChat() {
 
             <form onSubmit={handleSubmit} className="flex gap-2 border-t border-border pt-3">
               <Input 
-                placeholder="Qual seu maior gargalo?" 
+                placeholder="Envia sua mensagem" 
                 className="bg-transparent border-input"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
