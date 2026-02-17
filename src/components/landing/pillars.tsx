@@ -26,7 +26,7 @@ const solutions = [
 
 export function Pillars() {
   return (
-    <section className="w-full bg-background py-20 sm:py-24 overflow-hidden">
+    <section id="diferenciais" className="w-full bg-background py-20 sm:py-24 overflow-hidden">
       <div className="container mx-auto px-4">
         <AnimationWrapper>
           <div className="text-center mb-16 max-w-4xl mx-auto">

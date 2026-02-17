@@ -12,15 +12,9 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <section id="manifesto">
-          <Manifesto />
-        </section>
-        <section id="diferenciais">
-          <Pillars />
-        </section>
-        <section id="especialista">
-          <NikoFactor />
-        </section>
+        <Manifesto />
+        <Pillars />
+        <NikoFactor />
         <FinalCta />
         <Footer />
       </main>

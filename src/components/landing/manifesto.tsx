@@ -2,7 +2,7 @@ import { AnimationWrapper } from "@/components/animation-wrapper";
 
 export function Manifesto() {
   return (
-    <section className="w-full bg-card py-20 sm:py-24">
+    <section id="manifesto" className="w-full bg-card py-20 sm:py-24">
       <div className="container mx-auto px-4 text-center">
         <div className="max-w-4xl mx-auto">
           <AnimationWrapper>
