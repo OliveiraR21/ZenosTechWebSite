@@ -65,85 +65,17 @@ export function Pillars() {
                     </Button>
                   </div>
 
-                  {/* Coluna do Vídeo com Mock UI */}
+                  {/* Coluna do Vídeo */}
                   <div className="flex-1 w-full relative">
-                    <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-[#0a0a0a] aspect-video shadow-[0_0_50px_-12px_rgba(204,255,0,0.2)]">
-                      
-                      {/* Fundo Decorativo Tecnológico (Substitui o vídeo original) */}
-                      <div className="absolute inset-0 opacity-20">
-                        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,#CCFF0033_0%,transparent_50%)]" />
-                        <div className="grid grid-cols-10 h-full w-full opacity-10">
-                          {[...Array(100)].map((_, i) => (
-                            <div key={i} className="border-[0.5px] border-white/10 w-full h-full" />
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* INTERFACE DE CHAT SIMULADA */}
-                      {solution.id === 'response' && (
-                        <div className="absolute inset-0 p-8 flex flex-col justify-end gap-4 overflow-hidden">
-                          
-                          {/* Mensagem do Cliente */}
-                          <div className="flex flex-col gap-1 animate-in fade-in slide-in-from-left-4 duration-700">
-                             <span className="text-[10px] text-zinc-500 ml-2 uppercase tracking-widest">Cliente</span>
-                             <div className="bg-zinc-800/80 backdrop-blur-md p-3 rounded-2xl rounded-bl-none max-w-[85%] border border-white/5">
-                               <p className="text-sm text-zinc-100">Como funciona a automação para minha clínica?</p>
-                             </div>
-                          </div>
-
-                          {/* Indicador de Digitando (Gatilho de Agilidade) */}
-                          <div className="flex items-center gap-2 text-primary animate-pulse ml-2 mb-2">
-                             <div className="flex gap-1">
-                                <span className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce [animation-delay:-0.3s]" />
-                                <span className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce [animation-delay:-0.15s]" />
-                                <span className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" />
-                             </div>
-                             <span className="text-[10px] font-bold uppercase tracking-tighter">NIKO está analisando...</span>
-                          </div>
-
-                          {/* Resposta da IA Zenos */}
-                          <div className="flex flex-col items-end gap-1 animate-in fade-in slide-in-from-right-4 duration-700 delay-1000 fill-mode-both">
-                             <span className="text-[10px] text-primary mr-2 uppercase tracking-widest font-bold">Zenos Response</span>
-                             <div className="bg-primary/10 backdrop-blur-xl p-4 rounded-2xl rounded-br-none max-w-[90%] border border-primary/30 shadow-[0_0_20px_rgba(204,255,0,0.1)]">
-                               <p className="text-sm text-white leading-relaxed">
-                                 Integramos seu WhatsApp ao CRM. A IA qualifica o paciente e agenda a consulta em menos de 1 minuto. Quer ver um exemplo de fluxo?
-                               </p>
-                             </div>
-                          </div>
-
-                          {/* Interface Inferior do Celular (Fake) */}
-                          <div className="mt-4 pt-4 border-t border-white/5 flex justify-between items-center opacity-40">
-                             <div className="h-2 w-32 bg-zinc-800 rounded-full" />
-                             <div className="h-8 w-8 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center">
-                                <div className="w-3 h-3 bg-primary rounded-sm" />
-                             </div>
-                          </div>
-
-                        </div>
-                      )}
-
-                      {/* Seção Advisory (Simulação de Dashboard) */}
-                      {solution.id === 'advisory' && (
-                        <div className="absolute inset-0 p-6 flex flex-col gap-4">
-                           <div className="h-6 w-48 bg-zinc-800/50 rounded animate-pulse" />
-                           <div className="grid grid-cols-3 gap-4">
-                              {[1,2,3].map(i => (
-                                <div key={i} className="h-20 bg-primary/5 border border-primary/20 rounded-xl p-3 flex flex-col justify-between">
-                                   <div className="h-2 w-10 bg-zinc-700 rounded" />
-                                   <div className="h-4 w-16 bg-primary/40 rounded animate-pulse" />
-                                </div>
-                              ))}
-                           </div>
-                           <div className="flex-1 bg-zinc-900/50 rounded-xl border border-white/5 p-4 relative overflow-hidden">
-                              <div className="absolute top-0 left-0 w-full h-1 bg-primary animate-cutting-line" />
-                              <div className="space-y-3">
-                                 <div className="h-2 w-full bg-zinc-800 rounded" />
-                                 <div className="h-2 w-[80%] bg-zinc-800 rounded" />
-                                 <div className="h-2 w-[60%] bg-zinc-700 rounded" />
-                              </div>
-                           </div>
-                        </div>
-                      )}
+                    <div className="relative rounded-2xl overflow-hidden border border-border aspect-video shadow-lg">
+                        <video
+                            src={solution.videoSrc}
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            className="w-full h-full object-cover"
+                        />
                     </div>
                   </div>
                 </div>

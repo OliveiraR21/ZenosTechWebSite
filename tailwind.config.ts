@@ -119,10 +119,6 @@ export default {
             transform: 'translateY(0)'
           }
         },
-        'cutting-line': {
-          '0%': { transform: 'translateX(-100%)' },
-          '100%': { transform: 'translateX(100%)' },
-        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -130,7 +126,6 @@ export default {
         'border-glow': 'border-glow 5s ease-in-out infinite',
         'fade-in-down': 'fade-in-down 0.5s ease-out forwards',
         'fade-in-up': 'fade-in-up 0.5s ease-out forwards',
-        'cutting-line': 'cutting-line 3s linear infinite',
       },
     },
   },
