@@ -2,8 +2,9 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Bot, X, Send, MessageSquare, Loader } from "lucide-react";
+import { Bot, X, Send, Loader } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { generateNikoStrategy } from "@/ai/flows/niko-strategy-flow";
@@ -172,18 +173,28 @@ export function NikoChat() {
         <Button
           onClick={() => setIsOpen(!isOpen)}
           size="lg"
-          className="h-16 w-16 rounded-full bg-primary p-0 text-primary-foreground shadow-lg shadow-primary/20 transition-transform duration-300"
+          className="relative h-16 w-16 rounded-full bg-primary p-0 text-primary-foreground shadow-lg shadow-primary/20 transition-transform duration-300 overflow-hidden"
           aria-label="Abrir chat com NIKO"
         >
           <AnimatePresence initial={false} mode="wait">
             <motion.div
-              key={isOpen ? "x" : "message"}
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 20, opacity: 0 }}
+              key={isOpen ? "x" : "niko"}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.2 }}
+              className="absolute inset-0 flex items-center justify-center"
             >
-              {isOpen ? <X className="h-7 w-7" /> : <MessageSquare className="h-7 w-7" />}
+              {isOpen ? (
+                <X className="h-7 w-7" />
+              ) : (
+                <Image 
+                  src="/NIKO/NIKO_CABECA.jpg" 
+                  alt="NIKO, assistente de IA" 
+                  fill
+                  className="object-cover"
+                />
+              )}
             </motion.div>
           </AnimatePresence>
         </Button>
