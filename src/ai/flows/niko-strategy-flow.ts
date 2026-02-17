@@ -3,7 +3,7 @@ import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 
 // Modelo definido conforme solicitado
-const AI_MODEL = 'googleai/gemini-1.5-pro-latest';
+const AI_MODEL = 'googleai/gemini-2.5-flash-lite';
 
 const NikoStrategyInputSchema = z.object({
   history: z.string().describe("The conversation history between the user and NIKO."),
