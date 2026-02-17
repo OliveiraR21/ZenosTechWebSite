@@ -1,15 +1,17 @@
 "use client";
 
+import Link from "next/link";
 import { Bot, ClipboardList, Play } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { AnimationWrapper } from "../animation-wrapper";
+import { WHATSAPP_LINKS } from "@/lib/constants";
 
 const solutions = [
   {
     id: "advisory",
     icon: ClipboardList,
-    title: "Visão Limpa: Zenos Advisory",
+    title: "Zenos Consultoria",
     description: "Diagnóstico estratégico para eliminar processos inúteis. Não automatizamos o caos; nós o organizamos primeiro.",
     videoSrc: "/video_hero.mp4", // Usando o vídeo da hero como textura técnica
     cta: "Agendar Diagnóstico"
@@ -17,7 +19,7 @@ const solutions = [
   {
     id: "response",
     icon: Bot,
-    title: "Agilidade Ágil: Zenos Response",
+    title: "Zenos Flow",
     description: "Atendimento inteligente que não dorme. Uma IA treinada no seu tom de voz para fechar vendas enquanto você descansa.",
     videoSrc: "/video_whatsapp.mp4", 
     cta: "Ver Automação Real"
@@ -59,9 +61,11 @@ export function Pillars() {
                     <p className="text-xl text-muted-foreground leading-relaxed">
                       {solution.description}
                     </p>
-                    <Button variant="outline" className="group border-primary/50 hover:bg-primary hover:text-black font-bold">
-                      <Play className="mr-2 h-4 w-4 fill-current" /> 
-                      {solution.cta}
+                    <Button asChild variant="outline" className="group border-primary/50 hover:bg-primary hover:text-black font-bold">
+                      <Link href={solution.id === 'advisory' ? WHATSAPP_LINKS.advisory : WHATSAPP_LINKS.response} target="_blank">
+                        <Play className="mr-2 h-4 w-4 fill-current" /> 
+                        {solution.cta}
+                      </Link>
                     </Button>
                   </div>
 

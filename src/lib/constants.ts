@@ -2,8 +2,8 @@
 export const WHATSAPP_NUMBER = "5511999999999"; 
 
 export const WHATSAPP_LINKS = {
-  advisory: `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Olá, quero saber mais sobre o Zenos Advisory.")}`,
-  response: `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Olá, quero saber mais sobre o Zenos Response.")}`,
+  advisory: `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Olá, quero saber mais sobre a Zenos Consultoria.")}`,
+  response: `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Olá, quero saber mais sobre o Zenos Flow.")}`,
   strategist: `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Olá, gostaria de falar com um estrategista.")}`,
   strategicSession: `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Olá, gostaria de agendar uma sessão estratégica.")}`,
   efficiencyDiagnosis: `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Olá, gostaria de agendar um Diagnóstico de Eficiência.")}`,
