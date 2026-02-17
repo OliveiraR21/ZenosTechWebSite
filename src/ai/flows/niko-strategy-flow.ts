@@ -2,6 +2,9 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 
+// Modelo definido conforme solicitado
+const AI_MODEL = 'googleai/gemini-3-flash-preview';
+
 const NikoStrategyInputSchema = z.object({
   history: z.string().describe("The conversation history between the user and NIKO."),
 });
@@ -16,7 +19,7 @@ export async function generateNikoStrategy(input: NikoStrategyInput): Promise<Ni
   return nikoStrategyFlow(input);
 }
 
-// DEFINIÇÃO DO SYSTEM PROMPT (Identidade e Regras)
+// System Prompt movido para uma constante limpa
 const SYSTEM_INSTRUCTION = `You are NIKO, an AI Business Specialist and the technological right hand of Renan Oliveira at Zenos Tech.
 
 **1. Identity & Purpose:**
@@ -59,14 +62,17 @@ The final goal is a direct close (Payment Link - *you will mention this is possi
 - **Redirection:** If the customer goes off-topic (e.g., asks for marketing tips), respond: "Meu foco é engenharia de processos. Vamos focar em como a Zenos vai eliminar seu ruído operacional atual?".
 - **Single Link:** ALWAYS use the WhatsApp link for the strategist for any channel transition.`;
 
-// DEFINIÇÃO DO PROMPT
-const prompt = ai.definePrompt({
-  name: 'nikoStrategyPrompt',
-  input: { schema: NikoStrategyInputSchema },
-  output: { schema: NikoStrategyOutputSchema },
-  // AQUI ESTÁ A CORREÇÃO: Transformamos em uma função que retorna mensagens estruturadas
-  prompt: async (input) => {
-    return {
+// Flow simplificado usando ai.generate diretamente
+const nikoStrategyFlow = ai.defineFlow(
+  {
+    name: 'nikoStrategyFlow',
+    inputSchema: NikoStrategyInputSchema,
+    outputSchema: NikoStrategyOutputSchema,
+  },
+  async (input) => {
+    // Chamada direta ao modelo, passando System Instruction via 'messages' ou 'history'
+    const response = await ai.generate({
+      model: AI_MODEL,
       messages: [
         {
           role: 'system',
@@ -76,23 +82,13 @@ const prompt = ai.definePrompt({
           role: 'user',
           content: [{ text: `Conversation History:\n${input.history}\n\nBased on the history, generate the next appropriate response for NIKO, following all the rules provided above. The response should be a single string for the insight field.` }]
         }
-      ]
-    }
-  },
-});
+      ],
+      output: { schema: NikoStrategyOutputSchema },
+    });
 
-const nikoStrategyFlow = ai.defineFlow(
-  {
-    name: 'nikoStrategyFlow',
-    inputSchema: NikoStrategyInputSchema,
-    outputSchema: NikoStrategyOutputSchema,
-  },
-  async (input) => {
-    // A chamada agora está segura dentro da estrutura de mensagens
-    const { output } = await prompt(input);
-    if (!output) {
+    if (!response.output) {
       throw new Error("AI response was empty.");
     }
-    return output;
+    return response.output;
   }
 );
