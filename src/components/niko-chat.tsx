@@ -18,7 +18,7 @@ interface Message {
 
 const initialMessage: Message = {
   author: 'niko',
-  text: "Olá! Sou o NIKO. Minha missão é simplificar sua operação. Qual o maior desafio do seu negócio hoje?"
+  text: "Olá, sou o NIKO. Posso analisar sua operação agora?"
 };
 
 export function NikoChat() {
@@ -52,16 +52,25 @@ export function NikoChat() {
     if (!inputValue.trim() || isLoading) return;
 
     const userMessage: Message = { author: 'user', text: inputValue };
-    setMessages(prev => [...prev, userMessage]);
+    const newMessages = [...messages, userMessage];
+    setMessages(newMessages);
     setInputValue("");
     setIsLoading(true);
     setShowStrategyButton(false);
 
+    const history = newMessages
+      .map(msg => `${msg.author === 'user' ? 'User' : 'NIKO'}: ${msg.text}`)
+      .join('\n');
+
     try {
-      const response = await generateNikoStrategy({ challenge: inputValue });
+      const response = await generateNikoStrategy({ history });
       const nikoResponse: Message = { author: 'niko', text: response.insight };
       setMessages(prev => [...prev, nikoResponse]);
-      setShowStrategyButton(true);
+      
+      if (response.insight.toLowerCase().includes('whatsapp') || response.insight.toLowerCase().includes('renan')) {
+        setShowStrategyButton(true);
+      }
+
     } catch (error) {
       console.error("Error calling AI strategy flow:", error);
       const errorMessage: Message = {
