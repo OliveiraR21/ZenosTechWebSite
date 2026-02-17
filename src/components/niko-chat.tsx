@@ -18,7 +18,7 @@ interface Message {
 
 const initialMessage: Message = {
   author: 'niko',
-  text: "Olá, sou o NIKO. Posso analisar sua operação agora?"
+  text: "Olá! Sou o NIKO, especialista de negócios da Zenos. Antes de começarmos a analisar sua operação, como posso te chamar?"
 };
 
 export function NikoChat() {
