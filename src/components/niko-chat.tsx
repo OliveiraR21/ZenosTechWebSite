@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Bot, X, Send, Loader } from "lucide-react";
+import { X, Send, Loader } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { generateNikoStrategy } from "@/ai/flows/niko-strategy-flow";
@@ -88,8 +88,13 @@ export function NikoChat() {
           >
             <div className="flex items-center justify-between border-b border-border pb-3">
               <div className="flex items-center gap-2">
-                <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-primary/20">
-                  <Bot className="h-5 w-5 text-primary" />
+                <div className="relative h-8 w-8 rounded-full overflow-hidden">
+                  <Image 
+                    src="/NIKO/NIKO_CABECA.jpg" 
+                    alt="NIKO, assistente de IA" 
+                    fill
+                    className="object-cover"
+                  />
                   <div className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-primary animate-pulse border-2 border-card" />
                 </div>
                 <h4 className="font-headline text-xl uppercase tracking-wider text-foreground">NIKO: IA Ativa</h4>
