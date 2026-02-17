@@ -65,58 +65,81 @@ export function Pillars() {
                     </Button>
                   </div>
 
-                  {/* Coluna do Vídeo com Overlay de Chat */}
+                  {/* Coluna do Vídeo com Mock UI */}
                   <div className="flex-1 w-full relative">
-                    <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-black aspect-video shadow-[0_0_50px_-12px_rgba(204,255,0,0.3)]">
+                    <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-[#0a0a0a] aspect-video shadow-[0_0_50px_-12px_rgba(204,255,0,0.2)]">
                       
-                      {/* O VÍDEO (Agora como fundo abstrato) */}
-                      <video 
-                        src={solution.videoSrc}
-                        className="w-full h-full object-cover opacity-40 blur-[2px] grayscale-[0.5]"
-                        autoPlay muted loop playsInline
-                      />
+                      {/* Fundo Decorativo Tecnológico (Substitui o vídeo original) */}
+                      <div className="absolute inset-0 opacity-20">
+                        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,#CCFF0033_0%,transparent_50%)]" />
+                        <div className="grid grid-cols-10 h-full w-full opacity-10">
+                          {[...Array(100)].map((_, i) => (
+                            <div key={i} className="border-[0.5px] border-white/10 w-full h-full" />
+                          ))}
+                        </div>
+                      </div>
 
-                      {/* INTERFACE DE CHAT EM PORTUGUÊS (Sobreposta) */}
+                      {/* INTERFACE DE CHAT SIMULADA */}
                       {solution.id === 'response' && (
-                        <div className="absolute inset-0 p-6 flex flex-col justify-center gap-4">
+                        <div className="absolute inset-0 p-8 flex flex-col justify-end gap-4 overflow-hidden">
+                          
                           {/* Mensagem do Cliente */}
-                          <div className="bg-zinc-800/90 backdrop-blur-md p-3 rounded-2xl rounded-bl-none max-w-[80%] border border-white/5 animate-fade-in-up">
-                            <p className="text-xs text-zinc-400 mb-1">Cliente</p>
-                            <p className="text-sm text-white">Olá! Gostaria de saber os valores da consultoria.</p>
+                          <div className="flex flex-col gap-1 animate-in fade-in slide-in-from-left-4 duration-700">
+                             <span className="text-[10px] text-zinc-500 ml-2 uppercase tracking-widest">Cliente</span>
+                             <div className="bg-zinc-800/80 backdrop-blur-md p-3 rounded-2xl rounded-bl-none max-w-[85%] border border-white/5">
+                               <p className="text-sm text-zinc-100">Como funciona a automação para minha clínica?</p>
+                             </div>
+                          </div>
+
+                          {/* Indicador de Digitando (Gatilho de Agilidade) */}
+                          <div className="flex items-center gap-2 text-primary animate-pulse ml-2 mb-2">
+                             <div className="flex gap-1">
+                                <span className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce [animation-delay:-0.3s]" />
+                                <span className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce [animation-delay:-0.15s]" />
+                                <span className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" />
+                             </div>
+                             <span className="text-[10px] font-bold uppercase tracking-tighter">NIKO está analisando...</span>
                           </div>
 
                           {/* Resposta da IA Zenos */}
-                          <div className="bg-primary/20 backdrop-blur-md p-3 rounded-2xl rounded-br-none max-w-[80%] self-end border border-primary/30 animate-fade-in-up [animation-delay:1s]">
-                            <div className="text-[10px] font-bold text-primary uppercase mb-1 flex items-center gap-1">
-                              <div className="w-1 h-1 bg-primary rounded-full animate-pulse" />
-                              NIKO AI • Zenos
-                            </div>
-                            <p className="text-sm text-white">Com certeza! Para PMEs, temos o plano Advisory que foca em escala. Posso agendar seu diagnóstico hoje?</p>
+                          <div className="flex flex-col items-end gap-1 animate-in fade-in slide-in-from-right-4 duration-700 delay-1000 fill-mode-both">
+                             <span className="text-[10px] text-primary mr-2 uppercase tracking-widest font-bold">Zenos Response</span>
+                             <div className="bg-primary/10 backdrop-blur-xl p-4 rounded-2xl rounded-br-none max-w-[90%] border border-primary/30 shadow-[0_0_20px_rgba(204,255,0,0.1)]">
+                               <p className="text-sm text-white leading-relaxed">
+                                 Integramos seu WhatsApp ao CRM. A IA qualifica o paciente e agenda a consulta em menos de 1 minuto. Quer ver um exemplo de fluxo?
+                               </p>
+                             </div>
                           </div>
 
-                          {/* Badge de Status */}
-                          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 border border-primary/40 px-3 py-1 rounded-full flex items-center gap-2">
-                             <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
-                             <span className="text-[10px] font-bold text-white uppercase tracking-tighter">Automação Ativa</span>
+                          {/* Interface Inferior do Celular (Fake) */}
+                          <div className="mt-4 pt-4 border-t border-white/5 flex justify-between items-center opacity-40">
+                             <div className="h-2 w-32 bg-zinc-800 rounded-full" />
+                             <div className="h-8 w-8 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center">
+                                <div className="w-3 h-3 bg-primary rounded-sm" />
+                             </div>
                           </div>
+
                         </div>
                       )}
 
-                      {/* Overlay para Advisory (Exemplo de Dashboard) */}
+                      {/* Seção Advisory (Simulação de Dashboard) */}
                       {solution.id === 'advisory' && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-[1px]">
-                           <div className="bg-background/90 border border-white/10 p-4 rounded-xl shadow-2xl scale-90 md:scale-100">
-                              <div className="flex items-center gap-4 mb-4 border-b border-white/10 pb-2">
-                                 <div className="h-8 w-8 rounded bg-primary/20 flex items-center justify-center text-primary font-bold">Z</div>
-                                 <div className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Relatório de Eficiência</div>
-                              </div>
-                              <div className="space-y-2">
-                                 <div className="h-2 w-32 bg-zinc-700 rounded animate-pulse" />
-                                 <div className="h-2 w-48 bg-primary/40 rounded animate-pulse" />
-                                 <div className="flex gap-2 pt-2">
-                                    <div className="h-8 w-16 bg-zinc-800 rounded border border-white/5" />
-                                    <div className="h-8 w-16 bg-zinc-800 rounded border border-white/5" />
-                                 </div>
+                        <div className="absolute inset-0 p-6 flex flex-col gap-4">
+                           <div className="h-6 w-48 bg-zinc-800/50 rounded animate-pulse" />
+                           <div className="grid grid-cols-3 gap-4">
+                              {[1,2,3].map(i => (
+                                <div key={i} className="h-20 bg-primary/5 border border-primary/20 rounded-xl p-3 flex flex-col justify-between">
+                                   <div className="h-2 w-10 bg-zinc-700 rounded" />
+                                   <div className="h-4 w-16 bg-primary/40 rounded animate-pulse" />
+                                </div>
+                              ))}
+                           </div>
+                           <div className="flex-1 bg-zinc-900/50 rounded-xl border border-white/5 p-4 relative overflow-hidden">
+                              <div className="absolute top-0 left-0 w-full h-1 bg-primary animate-cutting-line" />
+                              <div className="space-y-3">
+                                 <div className="h-2 w-full bg-zinc-800 rounded" />
+                                 <div className="h-2 w-[80%] bg-zinc-800 rounded" />
+                                 <div className="h-2 w-[60%] bg-zinc-700 rounded" />
                               </div>
                            </div>
                         </div>

@@ -120,8 +120,8 @@ export default {
           }
         },
         'cutting-line': {
-          '0%': { transform: 'translate(-50%, -50%) rotate(-45deg) translateX(-150%)' },
-          '100%': { transform: 'translate(-50%, -50%) rotate(-45deg) translateX(150%)' },
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' },
         },
       },
       animation: {
@@ -130,7 +130,7 @@ export default {
         'border-glow': 'border-glow 5s ease-in-out infinite',
         'fade-in-down': 'fade-in-down 0.5s ease-out forwards',
         'fade-in-up': 'fade-in-up 0.5s ease-out forwards',
-        'cutting-line': 'cutting-line 8s linear infinite',
+        'cutting-line': 'cutting-line 3s linear infinite',
       },
     },
   },
