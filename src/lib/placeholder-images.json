@@ -1,24 +1,6 @@
 {
   "placeholderImages": [
     {
-      "id": "niko-tactical",
-      "description": "Image of NIKO, an AI strategic mentor, in a premium tactical suit next to a clean dashboard.",
-      "imageUrl": "https://images.unsplash.com/photo-1654900985944-10c3872a3c86?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx0YWN0aWNhbCUyMHN1aXQlMjBtYW58ZW58MHx8fHwxNzcwNjg3OTk4fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "tactical suit man"
-    },
-    {
-      "id": "flowchart-consultancy",
-      "description": "A clean and organized flowchart representing business processes and consultancy.",
-      "imageUrl": "https://images.unsplash.com/photo-1559025725-70282b3c405a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxmbG93Y2hhcnQlMjBkaWFncmFtfGVufDB8fHx8MTcwODY5MjYxN3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "flowchart diagram"
-    },
-    {
-      "id": "chat-automation",
-      "description": "A smartphone with the WhatsApp application open, showing an automated conversation.",
-      "imageUrl": "https://images.unsplash.com/photo-1633355444132-695d5876cd00?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx3aGF0c2FwcCUyMGF1dG9tYXRpb258ZW58MHx8fHwxNzA5Njc1NzMwfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "whatsapp automation"
-    },
-    {
       "id": "renan-oliveira-portrait",
       "description": "Portrait of Renan Oliveira, founder of Zenos Tech, with a colored background.",
       "imageUrl": "/renan_fundo_colorido.jpg",

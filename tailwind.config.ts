@@ -79,22 +79,6 @@ export default {
         sm: 'calc(var(--radius) - 4px)',
       },
       keyframes: {
-        'accordion-down': {
-          from: {
-            height: '0',
-          },
-          to: {
-            height: 'var(--radix-accordion-content-height)',
-          },
-        },
-        'accordion-up': {
-          from: {
-            height: 'var(--radix-accordion-content-height)',
-          },
-          to: {
-            height: '0',
-          },
-        },
         'border-glow': {
           '0%, 100%': { 'box-shadow': '0 0 10px -5px hsl(var(--primary))' },
           '50%': { 'box-shadow': '0 0 20px 0px hsl(var(--primary) / 0.7)' },
@@ -121,8 +105,6 @@ export default {
         },
       },
       animation: {
-        'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out',
         'border-glow': 'border-glow 5s ease-in-out infinite',
         'fade-in-down': 'fade-in-down 0.5s ease-out forwards',
         'fade-in-up': 'fade-in-up 0.5s ease-out forwards',
