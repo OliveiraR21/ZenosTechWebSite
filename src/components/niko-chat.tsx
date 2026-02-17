@@ -67,7 +67,7 @@ export function NikoChat() {
       const nikoResponse: Message = { author: 'niko', text: response.insight };
       setMessages(prev => [...prev, nikoResponse]);
       
-      if (response.insight.toLowerCase().includes('whatsapp') || response.insight.toLowerCase().includes('renan')) {
+      if (response.showWhatsappButton) {
         setShowStrategyButton(true);
       }
 
@@ -147,7 +147,7 @@ export function NikoChat() {
                         <div className="flex items-center gap-2 text-primary animate-pulse">
                            <div className="flex gap-1">
                               <span className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce [animation-delay:-0.3s]" />
-                              <span className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce [animation-delay:-0.15s]" />
+                              <span className="w-1.is h-1.5 bg-primary rounded-full animate-bounce [animation-delay:-0.15s]" />
                               <span className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" />
                            </div>
                         </div>

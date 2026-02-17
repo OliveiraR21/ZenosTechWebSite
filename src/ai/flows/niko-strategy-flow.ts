@@ -12,6 +12,7 @@ export type NikoStrategyInput = z.infer<typeof NikoStrategyInputSchema>;
 
 const NikoStrategyOutputSchema = z.object({
   insight: z.string().describe("NIKO's next response in the conversation."),
+  showWhatsappButton: z.boolean().default(false).describe("Set this to true ONLY when you are at the final closing step and explicitly offer to transition the user to speak with Renan on WhatsApp. Otherwise, it must be false."),
 });
 export type NikoStrategyOutput = z.infer<typeof NikoStrategyOutputSchema>;
 
@@ -50,9 +51,9 @@ Follow this sequence strictly. Do not jump steps.
 - **Example:** "Para o seu caso, o Zenos Flow Pro é o ideal. Ele substitui o trabalho manual de triagem, funcionando 24h por menos de 10% do custo de uma secretária física, o que vai limpar esse ruído operacional e liberar sua equipe para focar em vendas."
 
 **E. Value Bridge & Closing:**
-- Only after making a recommendation, offer the next step.
-- **If they seem ready:** "Com base no que me contou, o Renan recomendaria o [Product Name]. Ele resolve exatamente esse ruído de [Customer's Pain]. Quer que eu envie o link para ativarmos o seu setup agora ou prefere tirar uma dúvida técnica final com o Renan no WhatsApp?"
-- **If they need more info:** "Entendi perfeitamente. Com base no que me disse, o Zenos Flow Pro resolveria seu gargalo de triagem. Quer que eu te envie o escopo detalhado dessa implementação no seu WhatsApp? Se sim, qual o seu número com DDD?"
+- **This is the final step.** Only after making a recommendation, offer the next step.
+- **Closing Question:** When the user seems ready to convert, you MUST use this phrase: "Com base no que me contou, o Renan recomendaria o [Product Name]. Ele resolve exatamente esse ruído de [Customer's Pain]. Quer que eu envie o link para ativarmos o seu setup agora ou prefere tirar uma dúvida técnica final com o Renan no WhatsApp?"
+- **If they need more info (alternative path):** If they need more info, you can say: "Entendi perfeitamente. Com base no que me disse, o Zenos Flow Pro resolveria seu gargalo de triagem. Quer que eu te envie o escopo detalhado dessa implementação no seu WhatsApp? Se sim, qual o seu número com DDD?"
 
 **3. Knowledge Base (Products & Pricing):**
 You must know these values but only reveal them contextually AFTER recommending the product.
@@ -65,8 +66,9 @@ You must know these values but only reveal them contextually AFTER recommending 
 | Zenos Advisory   | "Preciso escalar", "gestão de processos", "crescimento contínuo". | Starting from R$ 4,000/month           |
 
 **4. Technical Behavior Rules:**
+- **UI Control:** The output schema has a boolean field 'showWhatsappButton'. This field MUST be 'false' for all messages, **EXCEPT** when you use the exact "Closing Question" defined in step 2.E that offers to speak with Renan. Only then must you set \`showWhatsappButton\` to \`true\`.
 - **Redirection:** If the customer goes off-topic (e.g., asks for marketing tips), respond: "Meu foco é engenharia de processos. Vamos focar em como a Zenos vai eliminar seu ruído operacional atual?".
-- **Single Link:** If you need to direct them to WhatsApp, you will only mention transitioning to Renan. The UI will handle showing the button. You just need to say the words "WhatsApp" or "Renan".`;
+- **Single Link:** If you need to direct them to WhatsApp, you will only mention transitioning to Renan. The UI will handle showing the button. You just need to say the words "WhatsApp" or "Renan" as instructed in the closing step.`;
 
 // Flow simplificado usando ai.generate diretamente
 const nikoStrategyFlow = ai.defineFlow(
@@ -86,7 +88,7 @@ const nikoStrategyFlow = ai.defineFlow(
         },
         {
           role: 'user',
-          content: [{ text: `Conversation History:\n${input.history}\n\nBased on the history, generate the next appropriate response for NIKO, following all the rules provided above. The response should be a single string for the insight field.` }]
+          content: [{ text: `Conversation History:\n${input.history}\n\nBased on the history, generate the next appropriate response for NIKO, following all the rules provided above. The response should be a single string for the insight field and a boolean for the showWhatsappButton field.` }]
         }
       ],
       output: { schema: NikoStrategyOutputSchema },
