@@ -85,7 +85,7 @@ export function NikoChat() {
             transition={{ duration: 0.3, ease: 'easeOut' }}
             className="mb-4 w-80 md:w-96 rounded-2xl border border-primary/20 bg-card/80 backdrop-blur-xl p-4 shadow-2xl shadow-primary/10"
           >
-            <div className="flex items-center justify-between border-b border-white/5 pb-3">
+            <div className="flex items-center justify-between border-b border-border pb-3">
               <div className="flex items-center gap-2">
                 <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-primary/20">
                   <Bot className="h-5 w-5 text-primary" />
@@ -98,7 +98,7 @@ export function NikoChat() {
               </Button>
             </div>
 
-            <div className="my-4 h-72 space-y-4 overflow-y-auto pr-2 text-sm">
+            <div className="my-4 h-64 space-y-4 overflow-y-auto pr-2 text-sm">
               {messages.map((msg, index) => (
                 <div
                   key={index}
@@ -109,16 +109,16 @@ export function NikoChat() {
                   style={{ animationDelay: `${100 * index}ms` }}
                 >
                    <span className={cn("text-[10px] uppercase tracking-widest",
-                    msg.author === 'user' ? 'text-zinc-500 mr-2' : 'text-primary font-bold ml-2'
+                    msg.author === 'user' ? 'text-muted-foreground mr-2' : 'text-primary font-bold ml-2'
                    )}>
                     {msg.author === 'user' ? 'Você' : 'Niko'}
                    </span>
                   <div
                     className={cn(
-                      "p-3 rounded-2xl border max-w-[85%] backdrop-blur-md",
+                      "p-3 rounded-2xl border max-w-[85%]",
                       msg.author === 'user'
-                        ? 'bg-zinc-800/80 border-white/10 text-zinc-100 rounded-br-none'
-                        : 'bg-primary/10 border-primary/20 text-white rounded-bl-none'
+                        ? 'bg-muted text-foreground border-border rounded-br-none'
+                        : 'bg-primary/10 border-primary/20 text-foreground rounded-bl-none'
                     )}
                   >
                     {msg.text}
@@ -149,15 +149,15 @@ export function NikoChat() {
               <div ref={messagesEndRef} />
             </div>
 
-            <form onSubmit={handleSubmit} className="flex gap-2 border-t border-white/5 pt-3">
+            <form onSubmit={handleSubmit} className="flex gap-2 border-t border-border pt-3">
               <Input 
                 placeholder="Qual seu maior gargalo?" 
-                className="bg-zinc-900/50 border-white/10"
+                className="bg-transparent border-input"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 disabled={isLoading}
               />
-              <Button type="submit" size="icon" className="bg-primary text-black hover:bg-primary/90 shrink-0" disabled={isLoading}>
+              <Button type="submit" size="icon" className="bg-primary text-primary-foreground hover:bg-primary/90 shrink-0" disabled={isLoading}>
                 {isLoading ? <Loader className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
               </Button>
             </form>
@@ -172,7 +172,7 @@ export function NikoChat() {
         <Button
           onClick={() => setIsOpen(!isOpen)}
           size="lg"
-          className="h-16 w-16 rounded-full bg-primary p-0 text-black shadow-lg shadow-primary/20 transition-transform duration-300"
+          className="h-16 w-16 rounded-full bg-primary p-0 text-primary-foreground shadow-lg shadow-primary/20 transition-transform duration-300"
           aria-label="Abrir chat com NIKO"
         >
           <AnimatePresence initial={false} mode="wait">
