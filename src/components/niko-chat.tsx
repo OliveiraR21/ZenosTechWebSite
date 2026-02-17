@@ -1,0 +1,193 @@
+"use client";
+
+import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { Bot, X, Send, MessageSquare, Loader } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { generateNikoStrategy } from "@/ai/flows/niko-strategy-flow";
+import { WHATSAPP_LINKS } from "@/lib/constants";
+import { cn } from "@/lib/utils";
+
+interface Message {
+  author: 'user' | 'niko';
+  text: string;
+}
+
+const initialMessage: Message = {
+  author: 'niko',
+  text: "Olá! Sou o NIKO. Minha missão é simplificar sua operação. Qual o maior desafio do seu negócio hoje?"
+};
+
+export function NikoChat() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([initialMessage]);
+  const [inputValue, setInputValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [showStrategyButton, setShowStrategyButton] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+        scrollToBottom();
+    }
+  }, [messages, isLoading, isOpen]);
+  
+  // Open chat automatically on first load after a delay
+  useEffect(() => {
+    const timer = setTimeout(() => {
+        setIsOpen(true);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!inputValue.trim() || isLoading) return;
+
+    const userMessage: Message = { author: 'user', text: inputValue };
+    setMessages(prev => [...prev, userMessage]);
+    setInputValue("");
+    setIsLoading(true);
+    setShowStrategyButton(false);
+
+    try {
+      const response = await generateNikoStrategy({ challenge: inputValue });
+      const nikoResponse: Message = { author: 'niko', text: response.insight };
+      setMessages(prev => [...prev, nikoResponse]);
+      setShowStrategyButton(true);
+    } catch (error) {
+      console.error("Error calling AI strategy flow:", error);
+      const errorMessage: Message = {
+        author: 'niko',
+        text: "Desculpe, estou com dificuldades para processar. Por favor, tente novamente ou fale com um estrategista."
+      };
+      setMessages(prev => [...prev, errorMessage]);
+      setShowStrategyButton(true);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="fixed bottom-6 right-6 z-50">
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            className="mb-4 w-80 md:w-96 rounded-2xl border border-primary/20 bg-card/80 backdrop-blur-xl p-4 shadow-2xl shadow-primary/10"
+          >
+            <div className="flex items-center justify-between border-b border-white/5 pb-3">
+              <div className="flex items-center gap-2">
+                <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-primary/20">
+                  <Bot className="h-5 w-5 text-primary" />
+                  <div className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-primary animate-pulse border-2 border-card" />
+                </div>
+                <h4 className="font-headline text-xl uppercase tracking-wider text-foreground">NIKO: IA Ativa</h4>
+              </div>
+              <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+
+            <div className="my-4 h-72 space-y-4 overflow-y-auto pr-2 text-sm">
+              {messages.map((msg, index) => (
+                <div
+                  key={index}
+                  className={cn(
+                    "flex flex-col gap-1 animate-in fade-in",
+                    msg.author === 'user' ? 'items-end slide-in-from-right-4' : 'items-start slide-in-from-left-4'
+                  )}
+                  style={{ animationDelay: `${100 * index}ms` }}
+                >
+                   <span className={cn("text-[10px] uppercase tracking-widest",
+                    msg.author === 'user' ? 'text-zinc-500 mr-2' : 'text-primary font-bold ml-2'
+                   )}>
+                    {msg.author === 'user' ? 'Você' : 'Niko'}
+                   </span>
+                  <div
+                    className={cn(
+                      "p-3 rounded-2xl border max-w-[85%] backdrop-blur-md",
+                      msg.author === 'user'
+                        ? 'bg-zinc-800/80 border-white/10 text-zinc-100 rounded-br-none'
+                        : 'bg-primary/10 border-primary/20 text-white rounded-bl-none'
+                    )}
+                  >
+                    {msg.text}
+                  </div>
+                </div>
+              ))}
+              {isLoading && (
+                 <div className="flex items-start gap-2 animate-in fade-in">
+                    <span className="text-[10px] text-primary uppercase tracking-widest font-bold ml-2">Niko</span>
+                    <div className="bg-primary/10 border-primary/20 p-3 rounded-2xl rounded-bl-none">
+                        <div className="flex items-center gap-2 text-primary animate-pulse">
+                           <div className="flex gap-1">
+                              <span className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce [animation-delay:-0.3s]" />
+                              <span className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce [animation-delay:-0.15s]" />
+                              <span className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" />
+                           </div>
+                        </div>
+                    </div>
+                 </div>
+              )}
+              {showStrategyButton && (
+                  <div className="px-2 pt-2 animate-in fade-in">
+                    <Button asChild className="w-full font-bold">
+                        <Link href={WHATSAPP_LINKS.strategist} target="_blank">Falar com um Estrategista</Link>
+                    </Button>
+                  </div>
+              )}
+              <div ref={messagesEndRef} />
+            </div>
+
+            <form onSubmit={handleSubmit} className="flex gap-2 border-t border-white/5 pt-3">
+              <Input 
+                placeholder="Qual seu maior gargalo?" 
+                className="bg-zinc-900/50 border-white/10"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                disabled={isLoading}
+              />
+              <Button type="submit" size="icon" className="bg-primary text-black hover:bg-primary/90 shrink-0" disabled={isLoading}>
+                {isLoading ? <Loader className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+              </Button>
+            </form>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <motion.div
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+      >
+        <Button
+          onClick={() => setIsOpen(!isOpen)}
+          size="lg"
+          className="h-16 w-16 rounded-full bg-primary p-0 text-black shadow-lg shadow-primary/20 transition-transform duration-300"
+          aria-label="Abrir chat com NIKO"
+        >
+          <AnimatePresence initial={false} mode="wait">
+            <motion.div
+              key={isOpen ? "x" : "message"}
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 20, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              {isOpen ? <X className="h-7 w-7" /> : <MessageSquare className="h-7 w-7" />}
+            </motion.div>
+          </AnimatePresence>
+        </Button>
+      </motion.div>
+    </div>
+  );
+}

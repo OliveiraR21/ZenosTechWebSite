@@ -3,6 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from '@/components/theme-provider';
 import { Inter, Teko } from 'next/font/google';
+import { NikoChat } from '@/components/niko-chat';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const teko = Teko({ subsets: ['latin'], weight: ['400', '700'], variable: '--font-teko' });
@@ -44,6 +45,7 @@ export default function RootLayout({
         >
           {children}
           <Toaster />
+          <NikoChat />
         </ThemeProvider>
       </body>
     </html>
