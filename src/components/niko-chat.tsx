@@ -30,6 +30,33 @@ export function NikoChat() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Load messages from localStorage on initial client-side mount
+  useEffect(() => {
+    try {
+      const savedMessages = localStorage.getItem('zenos-niko-chat');
+      if (savedMessages) {
+        const parsedMessages = JSON.parse(savedMessages);
+        if (Array.isArray(parsedMessages) && parsedMessages.length > 0) {
+          setMessages(parsedMessages);
+        }
+      }
+    } catch (error) {
+      console.error("Failed to load chat history from localStorage", error);
+      setMessages([initialMessage]);
+    }
+  }, []); // Empty dependency array, runs once on mount.
+
+  // Save messages to localStorage whenever they change
+  useEffect(() => {
+    if (messages.length > 1) {
+      try {
+        localStorage.setItem('zenos-niko-chat', JSON.stringify(messages));
+      } catch (error) {
+        console.error("Failed to save chat history to localStorage", error);
+      }
+    }
+  }, [messages]);
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
