@@ -1,5 +1,6 @@
 import { LogoImage } from "@/components/logo";
 import { Linkedin } from "lucide-react";
+import Link from "next/link";
 
 export function Footer() {
   return (
@@ -12,6 +13,7 @@ export function Footer() {
           </p>
         </div>
         <div className="flex items-center gap-6 text-muted-foreground">
+          <Link href="/admin/leads" className="text-sm transition-colors hover:text-primary">Admin</Link>
           <a
             href="https://www.linkedin.com/in/oliveira-renan/"
             aria-label="LinkedIn"

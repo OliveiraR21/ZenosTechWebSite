@@ -10,6 +10,9 @@ import { Input } from "@/components/ui/input";
 import { generateNikoStrategy } from "@/ai/flows/niko-strategy-flow";
 import { WHATSAPP_LINKS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { useFirebase, useUser, initiateAnonymousSignIn, addDocumentNonBlocking } from "@/firebase";
+import { collection, serverTimestamp } from "firebase/firestore";
+import { useToast } from "@/hooks/use-toast";
 
 interface Message {
   author: 'user' | 'niko';
@@ -29,6 +32,18 @@ export function NikoChat() {
   const [showStrategyButton, setShowStrategyButton] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [isWaitingForWhatsapp, setIsWaitingForWhatsapp] = useState(false);
+  
+  const { toast } = useToast();
+  const { auth, firestore } = useFirebase();
+  const { user, isUserLoading } = useUser();
+
+  // Anonymous sign-in
+  useEffect(() => {
+    if (!user && !isUserLoading) {
+      initiateAnonymousSignIn(auth);
+    }
+  }, [user, isUserLoading, auth]);
 
   // Load messages from localStorage on initial client-side mount
   useEffect(() => {
@@ -78,6 +93,28 @@ export function NikoChat() {
     if (!inputValue.trim() || isLoading) return;
 
     const userMessage: Message = { author: 'user', text: inputValue };
+    
+    if (isWaitingForWhatsapp) {
+      const name = messages.find(m => m.author === 'user')?.text;
+      if (name) {
+        const lead = {
+          fullName: name,
+          phoneNumber: inputValue,
+          source: 'NIKO',
+          status: 'New',
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+          interestArea: 'NIKO Tool', // Default interest area
+        };
+        addDocumentNonBlocking(collection(firestore, 'leads'), lead);
+        toast({
+          title: "Lead Capturado!",
+          description: "As informações foram salvas.",
+        });
+      }
+      setIsWaitingForWhatsapp(false);
+    }
+
     const newMessages = [...messages, userMessage];
     setMessages(newMessages);
     setInputValue("");
@@ -93,6 +130,10 @@ export function NikoChat() {
       const nikoResponse: Message = { author: 'niko', text: response.insight };
       setMessages(prev => [...prev, nikoResponse]);
       
+      if (response.insight.includes("WhatsApp com DDD")) {
+        setIsWaitingForWhatsapp(true);
+      }
+
       if (response.showWhatsappButton) {
         setShowStrategyButton(true);
       }
@@ -174,7 +215,7 @@ export function NikoChat() {
                         <div className="flex items-center gap-2 text-primary animate-pulse">
                            <div className="flex gap-1">
                               <span className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce [animation-delay:-0.3s]" />
-                              <span className="w-1.is h-1.5 bg-primary rounded-full animate-bounce [animation-delay:-0.15s]" />
+                              <span className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce [animation-delay:-0.15s]" />
                               <span className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" />
                            </div>
                         </div>

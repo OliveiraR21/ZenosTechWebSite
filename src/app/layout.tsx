@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from '@/components/theme-provider';
 import { Inter, Teko } from 'next/font/google';
 import { NikoChat } from '@/components/niko-chat';
+import { FirebaseClientProvider } from '@/firebase';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const teko = Teko({ subsets: ['latin'], weight: ['400', '700'], variable: '--font-teko' });
@@ -37,16 +38,18 @@ export default function RootLayout({
       <head>
       </head>
       <body className={`${inter.variable} ${teko.variable} font-body antialiased`}>
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-        >
-          {children}
-          <Toaster />
-          <NikoChat />
-        </ThemeProvider>
+        <FirebaseClientProvider>
+          <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              disableTransitionOnChange
+          >
+            {children}
+            <Toaster />
+            <NikoChat />
+          </ThemeProvider>
+        </FirebaseClientProvider>
       </body>
     </html>
   );
