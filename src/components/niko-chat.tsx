@@ -81,6 +81,7 @@ export function NikoChat() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            key="niko-chat-window"
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -177,6 +178,7 @@ export function NikoChat() {
         whileTap={{ scale: 0.9 }}
       >
         <Button
+          type="button"
           onClick={() => setIsOpen(!isOpen)}
           size="lg"
           className="relative h-16 w-16 rounded-full bg-primary p-0 text-primary-foreground shadow-lg shadow-primary/20 transition-transform duration-300 overflow-hidden"
