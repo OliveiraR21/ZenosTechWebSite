@@ -38,14 +38,6 @@ export function NikoChat() {
         scrollToBottom();
     }
   }, [messages, isLoading, isOpen]);
-  
-  // Open chat automatically on first load after a delay
-  useEffect(() => {
-    const timer = setTimeout(() => {
-        setIsOpen(true);
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
