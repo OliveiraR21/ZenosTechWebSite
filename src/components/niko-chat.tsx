@@ -28,6 +28,7 @@ export function NikoChat() {
   const [isLoading, setIsLoading] = useState(false);
   const [showStrategyButton, setShowStrategyButton] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -38,6 +39,12 @@ export function NikoChat() {
         scrollToBottom();
     }
   }, [messages, isLoading, isOpen]);
+
+  useEffect(() => {
+    if (isOpen && !isLoading) {
+      inputRef.current?.focus();
+    }
+  }, [isOpen, isLoading]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -159,6 +166,7 @@ export function NikoChat() {
 
             <form onSubmit={handleSubmit} className="flex gap-2 border-t border-border pt-3">
               <Input 
+                ref={inputRef}
                 placeholder="Envia sua mensagem" 
                 className="bg-transparent border-input"
                 value={inputValue}
