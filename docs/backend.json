@@ -1,0 +1,247 @@
+{
+  "entities": {
+    "UserProfile": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "UserProfile",
+      "type": "object",
+      "description": "Represents a user's profile information, persisting across sessions and devices. This entity stores basic user details and preferences.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the UserProfile entity."
+        },
+        "email": {
+          "type": "string",
+          "description": "The user's email address, used for identification.",
+          "format": "email"
+        },
+        "firstName": {
+          "type": "string",
+          "description": "The user's first name."
+        },
+        "lastName": {
+          "type": "string",
+          "description": "The user's last name."
+        },
+        "lastLogin": {
+          "type": "string",
+          "description": "Timestamp of the user's last successful login.",
+          "format": "date-time"
+        },
+        "languagePreference": {
+          "type": "string",
+          "description": "The user's preferred language for the application interface."
+        },
+        "timezonePreference": {
+          "type": "string",
+          "description": "The user's preferred timezone."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp when the user profile was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp when the user profile was last updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "lastLogin",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "NIKOSession": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "NIKOSession",
+      "type": "object",
+      "description": "Records the interaction history of a user with the NIKO AI assistant, ensuring conversation continuity across devices.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the NIKO session."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the UserProfile entity. (Relationship: UserProfile 1:N NIKOSession)"
+        },
+        "sessionStartTime": {
+          "type": "string",
+          "description": "Timestamp when the NIKO session began.",
+          "format": "date-time"
+        },
+        "sessionEndTime": {
+          "type": "string",
+          "description": "Timestamp when the NIKO session ended, if applicable.",
+          "format": "date-time"
+        },
+        "topic": {
+          "type": "string",
+          "description": "A brief summary or topic of the NIKO interaction session."
+        },
+        "prompt": {
+          "type": "string",
+          "description": "The user's input or question provided to NIKO."
+        },
+        "response": {
+          "type": "string",
+          "description": "NIKO's generated response or output for the interaction."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp when this NIKO session record was created.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "sessionStartTime",
+        "prompt",
+        "response",
+        "createdAt"
+      ]
+    },
+    "Lead": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Lead",
+      "type": "object",
+      "description": "Captures information about potential customers (leads) interested in Zenos services.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Lead entity."
+        },
+        "fullName": {
+          "type": "string",
+          "description": "The full name of the potential lead."
+        },
+        "email": {
+          "type": "string",
+          "description": "The email address of the potential lead.",
+          "format": "email"
+        },
+        "companyName": {
+          "type": "string",
+          "description": "The company name associated with the lead."
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "The phone number of the potential lead."
+        },
+        "interestArea": {
+          "type": "string",
+          "description": "A description of the lead's primary area of interest (e.g., 'Hero CTA', 'NIKO Tool', 'General Inquiry')."
+        },
+        "message": {
+          "type": "string",
+          "description": "Any specific message or inquiry provided by the lead."
+        },
+        "source": {
+          "type": "string",
+          "description": "The source or channel through which the lead was acquired (e.g., 'Hero CTA', 'Footer Contact Form', 'LinkedIn Ad')."
+        },
+        "status": {
+          "type": "string",
+          "description": "The current status of the lead in the sales pipeline (e.g., 'New', 'Contacted', 'Qualified', 'Converted')."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp when the lead record was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp when the lead record was last updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "interestArea",
+        "source",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "UserProfile",
+          "schema": {
+            "$ref": "#/backend/entities/UserProfile"
+          },
+          "description": "Stores individual user profile information. Access is restricted to the owner of the profile (`request.auth.uid == userId`). This ensures persistence across sessions and devices."
+        }
+      },
+      {
+        "path": "/users/{userId}/nikoSessions/{sessionId}",
+        "definition": {
+          "entityName": "NIKOSession",
+          "schema": {
+            "$ref": "#/backend/entities/NIKOSession"
+          },
+          "description": "Records the interaction history of a user with the NIKO AI assistant. Nested under the user's profile to enforce ownership. Access is restricted to the owner of the profile (`request.auth.uid == userId`). Includes denormalized 'userId' for explicit ownership linkage.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user who owns this NIKO session history."
+            },
+            {
+              "name": "sessionId",
+              "description": "The unique identifier for a specific NIKO AI interaction session."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/leads/{leadId}",
+        "definition": {
+          "entityName": "Lead",
+          "schema": {
+            "$ref": "#/backend/entities/Lead"
+          },
+          "description": "Captures information about potential customers. This is a top-level collection accessible only by Zenos administrators. Authorization is determined by the existence of the requesting user's UID in the `/roles_admin` collection, ensuring Authorization Independence and supporting secure QAPs for admin listing.",
+          "params": [
+            {
+              "name": "leadId",
+              "description": "The unique identifier for a potential customer lead."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/roles_admin/{adminId}",
+        "definition": {
+          "entityName": "admin",
+          "schema": {
+            "$ref": "#/backend/entities/UserProfile"
+          },
+          "description": "A top-level collection used for Database Access Control (DBAC). The mere existence of a document at `/roles_admin/{uid}` grants administrative privileges to the user with that UID. This collection stores minimal data, serving primarily as a security marker for roles. It allows for Authorization Independence for other collections like `/leads`.",
+          "params": [
+            {
+              "name": "adminId",
+              "description": "The unique identifier (UID) of a user who has been granted administrative privileges."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed following the core principles of Authorization Independence, Structural Segregation, and DBAC. User-specific data, such as `UserProfile` and `NIKOSession`, is stored in a hierarchical path `/users/{userId}/profiles/{userId}` (though technically just `/users/{userId}`) and `/users/{userId}/nikoSessions/{sessionId}`. This path-based ownership makes authorization extremely clear and simple: a user can only access their own data by checking `request.auth.uid == userId`. This inherently achieves Authorization Independence as `request.auth.uid` is available directly in the rules without any `get()` calls to parent documents.\n\nFor `NIKOSession`, nesting it under `/users/{userId}` directly addresses the user's concern about losing history across devices. By linking `NIKOSession` to the `UserProfile` through the `userId` in the path, all sessions persist and are accessible to the same authenticated user regardless of the device. The `NIKOSession` entity itself also contains `userId` as a redundant field, which further supports the ownership invariant.\n\nLeads are stored in a top-level collection `/leads/{leadId}`. To ensure access for the Zenos team ('para que eu possa ter acesso'), a global role-based access control (DBAC) model is implemented. A separate, top-level collection `/roles_admin/{adminId}` is introduced. Documents in this collection simply signify that the `adminId` (which would be the `uid` of a Zenos team member) holds an administrative role. Authorization for `/leads` would be granted by checking for the *existence* of a document in `/roles_admin/$(request.auth.uid)`. This completely decouples `Lead` document authorization from its content or any hierarchical parent, satisfying Authorization Independence (MANDATE A) and enabling QAPs for global lead listing (MANDATE B). It allows a Zenos administrator to `list` all leads by querying the `/leads` collection directly, without complex filtering rules, because the security rules will pre-qualify the requester's role.\n\nStructural Segregation (MANDATE B) is maintained across all collections. `/users` contains only `UserProfile` data, `/nikoSessions` (nested) contains only `NIKOSession` data, `/leads` contains only `Lead` data, and `/roles_admin` contains only admin role markers. This ensures that all documents within a given collection share the same security posture, simplifying rules and improving debuggability. All wildcards are semantic and descriptive, enforcing Data Clarity and Predictability (MANDATE D)."
+  }
+}

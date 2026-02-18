@@ -1,0 +1,183 @@
+/**
+ * This Firestore Security Ruleset defines access control for an application
+ * with both private user data and internal administrative data.
+ *
+ * Core Philosophy:
+ * The security model employs a hybrid approach. User-specific data is protected
+ * under a strict ownership model, ensuring users can only access their own
+ * information. Administrative data, such as sales leads, is protected using a
+ * Role-Based Access Control (RBAC) model, granting access only to designated
+ * administrators.
+ *
+ * Data Structure:
+ * - /users/{userId}/...: This path contains all data private to a single user,
+ *   including their profile (`/users/{userId}`) and their AI interaction history
+ *   (`/users/{userId}/nikoSessions/{sessionId}`). The hierarchical structure
+ *   allows for simple, path-based ownership rules.
+ * - /leads/{leadId}: A top-level collection for storing lead information. Access
+ *   is decoupled from the data itself and is managed globally by roles.
+ * - /roles_admin/{userId}: A top-level collection that serves as an access
+ *   control list. The existence of a document here grants a user administrative
+ *   privileges across the system, particularly for the /leads collection.
+ *
+ * Key Security Decisions:
+ * - User Data Isolation: All rules under the `/users/{userId}` path check that
+ *   the requester's UID matches the `userId` in the path. This strictly prevents
+ *   any user from accessing another user's data.
+ * - User Enumeration Prevention: Listing documents in the top-level `/users`
+ *   collection is explicitly disallowed to prevent malicious actors from scraping
+ *   a list of all user IDs.
+ * - Centralized Admin Roles: Admin privileges are managed in a single `/roles_admin`
+ *   collection. This makes role management straightforward and allows for
+ *   performant security checks without needing to inspect individual documents.
+ * - Immutable Roles via Client: The `/roles_admin` collection is read-only for
+ *   all client-side requests. This is a critical security measure to prevent users
+ *   from escalating their own privileges. Admin roles must be granted by a trusted
+ *   backend process (e.g., Cloud Function or Admin SDK).
+ *
+ * Denormalization for Authorization:
+ * The `NIKOSession` entity contains a `userId` field. On creation, the rules
+ * validate that this field matches the `userId` from the document path. On update,
+ * this field is enforced as immutable. This ensures relational integrity between
+ * a session and its owner without requiring costly `get` calls. The primary
+ * authorization still relies on the fast, path-based ownership check.
+ *
+ * Structural Segregation:
+ * Each top-level collection (`users`, `leads`, `roles_admin`) serves a distinct
+ * purpose with a uniform security posture, simplifying the ruleset and making it
+ * more predictable and secure.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------------------------
+    // --- Helper Functions ---
+    // ---------------------------
+
+    /**
+     * Returns true if the user is signed in.
+     */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /**
+     * Returns true if the requesting user's UID matches the provided userId.
+     * This is the foundation of the user-ownership security model.
+     * @param userId The user ID from the document path.
+     */
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    /**
+     * A robust check for update/delete operations, ensuring the user is the
+     * owner AND the document already exists.
+     * @param userId The user ID from the document path.
+     */
+    function isExistingOwner(userId) {
+      return isOwner(userId) && resource != null;
+    }
+
+    /**
+     * Returns true if the requesting user has an admin role.
+     * Role is determined by the existence of a document in the /roles_admin collection.
+     */
+    function isAdmin() {
+      return isSignedIn() && exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
+    }
+
+    // ---------------------------------
+    // --- Data Validation Functions ---
+    // ---------------------------------
+
+    /**
+     * On create, validates that the UserProfile's internal `id` field matches
+     * the document ID, ensuring relational integrity.
+     */
+    function isCreatingOwnProfile(userId) {
+      return request.resource.data.id == userId;
+    }
+
+    /**
+     * On update, ensures the UserProfile's internal `id` field is immutable.
+     */
+    function isProfileIdImmutable() {
+      return request.resource.data.id == resource.data.id;
+    }
+
+    /**
+     * On create, validates that the NIKOSession's internal `userId` field
+     * matches the owner's UID from the path.
+     */
+    function isCreatingOwnSession(userId) {
+      return request.resource.data.userId == userId;
+    }
+
+    /**
+     * On update, ensures the NIKOSession's owner link (`userId`) is immutable.
+     */
+    function isSessionOwnerIdImmutable() {
+      return request.resource.data.userId == resource.data.userId;
+    }
+
+
+    /**
+     * @description Rules for a user's own profile document.
+     * @path /users/{userId}
+     * @allow (get, create, update, delete) A signed-in user accessing their own profile document (e.g., /users/USER_123).
+     * @deny (list) Any user, including the owner, trying to list all documents in the `/users` collection.
+     * @deny (get) A signed-in user trying to read another user's profile (e.g., USER_ABC reading /users/USER_XYZ).
+     * @principle Restricts access to a user's own data tree and prevents user enumeration.
+     */
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow list: if false;
+      allow create: if isOwner(userId) && isCreatingOwnProfile(userId);
+      allow update: if isExistingOwner(userId) && isProfileIdImmutable();
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Rules for a user's NIKO AI session history.
+     * @path /users/{userId}/nikoSessions/{sessionId}
+     * @allow (all) A signed-in user performing any CRUD or list operation on their own sessions (e.g., in /users/USER_123/nikoSessions).
+     * @deny (all) A signed-in user trying to access another user's session history (e.g., USER_ABC accessing /users/USER_XYZ/nikoSessions).
+     * @principle Enforces document ownership for an entire subcollection based on the parent path.
+     */
+    match /users/{userId}/nikoSessions/{sessionId} {
+      allow get, list: if isOwner(userId);
+      allow create: if isOwner(userId) && isCreatingOwnSession(userId);
+      allow update: if isExistingOwner(userId) && isSessionOwnerIdImmutable();
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Rules for the collection of business leads.
+     * @path /leads/{leadId}
+     * @allow (all) A user whose UID exists in the `/roles_admin` collection performing any operation on any lead document.
+     * @deny (all) Any user who is not an administrator.
+     * @principle Implements Role-Based Access Control (RBAC) for sensitive internal data, completely separating it from user access.
+     */
+    match /leads/{leadId} {
+      allow get, list: if isAdmin();
+      allow create: if isAdmin();
+      allow update, delete: if isAdmin() && resource != null;
+    }
+
+    /**
+     * @description Rules for the admin role collection. This collection acts as a security marker.
+     * @path /roles_admin/{adminId}
+     * @allow (get, list) An administrator reading the list of admins.
+     * @deny (create, update, delete) All client-side write operations are forbidden to prevent self-promotion of privileges.
+     * @principle Secures the role-management system by making it read-only from the client. Roles must be assigned by a trusted backend.
+     */
+    match /roles_admin/{adminId} {
+      allow get, list: if isAdmin();
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+  }
+}
