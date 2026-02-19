@@ -5,53 +5,49 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useFirebase, initiateEmailSignIn } from '@/firebase';
+import { useFirebase } from '@/firebase';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { AuthError } from 'firebase/auth';
+import { signInWithEmailAndPassword, AuthError } from 'firebase/auth';
+import { Loader } from 'lucide-react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { auth } = useFirebase();
   const router = useRouter();
   const { toast } = useToast();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email || !password || !auth) return;
+
     setError(null);
-    initiateEmailSignIn(auth, email, password);
-    
-    // Optimistic redirect, the layout will handle non-admins
-    router.push('/admin/leads');
+    setIsLoading(true);
 
-    // Monitor auth state for login success or failure
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      if (user) {
-        toast({ title: "Login bem-sucedido!" });
-        router.push('/admin/leads');
-        unsubscribe();
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      toast({ title: "Login bem-sucedido!" });
+      router.push('/admin/leads');
+    } catch (err) {
+      let message = "Ocorreu um erro desconhecido.";
+      if (err instanceof Error && 'code' in err) {
+        const authError = err as AuthError;
+        if (authError.code === 'auth/user-not-found' || authError.code === 'auth/wrong-password' || authError.code === 'auth/invalid-credential') {
+          message = "Email ou senha inválidos.";
+        }
       }
-    });
-
-    // Handle login errors specifically
-    const originalSignIn = auth.signInWithEmailAndPassword;
-    auth.signInWithEmailAndPassword = (email, password) => {
-        return originalSignIn(email, password).catch((err: AuthError) => {
-            let message = "Ocorreu um erro desconhecido.";
-            if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
-                message = "Email ou senha inválidos.";
-            }
-            setError(message);
-            toast({
-                variant: "destructive",
-                title: "Falha no login",
-                description: message,
-            });
-            throw err;
-        });
-    };
+      setError(message);
+      toast({
+        variant: "destructive",
+        title: "Falha no login",
+        description: message,
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -72,6 +68,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                disabled={isLoading}
               />
             </div>
             <div className="space-y-2">
@@ -82,11 +79,13 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                disabled={isLoading}
               />
             </div>
             {error && <p className="text-sm font-medium text-destructive">{error}</p>}
-            <Button type="submit" className="w-full font-bold">
-              Entrar
+            <Button type="submit" className="w-full font-bold" disabled={isLoading}>
+              {isLoading && <Loader className="mr-2 h-4 w-4 animate-spin" />}
+              {isLoading ? 'Entrando...' : 'Entrar'}
             </Button>
           </form>
         </CardContent>
