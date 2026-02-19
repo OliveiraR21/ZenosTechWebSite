@@ -20,7 +20,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   const { toast } = useToast();
 
   const adminCheckRef = useMemo(() => {
-    if (!user) return null;
+    if (!user || user.isAnonymous) return null; // Don't check for anonymous users
     return doc(firestore, 'roles_admin', user.uid);
   }, [user, firestore]);
 
@@ -28,7 +28,9 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     if (isUserLoading) {
       return;
     }
-    if (!user) {
+
+    // If there is no user or the user is anonymous, redirect to login page
+    if (!user || user.isAnonymous) {
       if (pathname !== '/login') {
         router.replace('/login');
       }
@@ -45,7 +47,12 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
     getDoc(adminCheckRef)
       .then((docSnap) => {
-        setIsAdmin(docSnap.exists());
+        const isAdminUser = docSnap.exists();
+        setIsAdmin(isAdminUser);
+        // If user is admin but on login page, redirect to leads
+        if (isAdminUser && pathname === '/login') {
+            router.replace('/admin/leads');
+        }
         setIsAdminLoading(false);
       })
       .catch(() => {
@@ -56,12 +63,13 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
   const handleLogout = () => {
     if(!auth) return;
-    auth.signOut();
-    router.push('/');
+    auth.signOut().then(() => {
+        router.push('/');
+    });
   };
 
   const handleMakeAdmin = async () => {
-    if (!user || !firestore) return;
+    if (!user || user.isAnonymous || !firestore) return; // Extra check
     const adminDocRef = doc(firestore, 'roles_admin', user.uid);
     try {
       await setDoc(adminDocRef, { role: 'admin', createdAt: new Date() });
@@ -88,11 +96,13 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     );
   }
   
+  // If user is on login page, show the login page
   if (pathname === '/login') {
       return <>{children}</>;
   }
-
-  if (user && !isAdmin) {
+  
+  // If user is logged in (but not anonymous) and is not an admin, show the "make admin" page
+  if (user && !user.isAnonymous && !isAdmin) {
     return (
       <div className="flex h-screen w-full flex-col items-center justify-center bg-background p-4 text-center">
         <div className="max-w-md space-y-4">
@@ -115,27 +125,29 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     );
   }
 
-  if (!isAdmin) {
+  // If user is admin, show the admin layout
+  if (user && isAdmin) {
     return (
-      <div className="flex h-screen w-full items-center justify-center bg-background">
-         <p>Redirecionando para o login...</p>
-         <Loader className="ml-4 h-8 w-8 animate-spin text-primary" />
+      <div className="flex min-h-screen w-full flex-col bg-muted/40">
+         <header className="sticky top-0 z-40 flex h-14 items-center justify-between gap-4 border-b bg-background px-4 sm:px-6">
+              <Link href="/" className="flex items-center">
+                  <LogoImage className="relative h-8 w-20" />
+              </Link>
+              <Button onClick={handleLogout} variant="outline" size="sm">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Sair
+              </Button>
+         </header>
+        {children}
       </div>
     );
   }
 
+  // Fallback for any other case (e.g., user is not admin and not on login page, should have been redirected)
   return (
-    <div className="flex min-h-screen w-full flex-col bg-muted/40">
-       <header className="sticky top-0 z-40 flex h-14 items-center justify-between gap-4 border-b bg-background px-4 sm:px-6">
-            <Link href="/" className="flex items-center">
-                <LogoImage className="relative h-8 w-20" />
-            </Link>
-            <Button onClick={handleLogout} variant="outline" size="sm">
-                <LogOut className="mr-2 h-4 w-4" />
-                Sair
-            </Button>
-       </header>
-      {children}
+    <div className="flex h-screen w-full items-center justify-center bg-background">
+       <p>Redirecionando para o login...</p>
+       <Loader className="ml-4 h-8 w-8 animate-spin text-primary" />
     </div>
   );
 }
