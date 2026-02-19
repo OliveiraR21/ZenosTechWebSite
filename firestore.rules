@@ -162,7 +162,7 @@ service cloud.firestore {
      */
     match /leads/{leadId} {
       allow get, list: if isAdmin();
-      allow create: if isAdmin();
+      allow create: if true; // Allow anyone to create a lead
       allow update, delete: if isAdmin() && resource != null;
     }
 
@@ -170,12 +170,13 @@ service cloud.firestore {
      * @description Rules for the admin role collection. This collection acts as a security marker.
      * @path /roles_admin/{adminId}
      * @allow (get, list) An administrator reading the list of admins.
-     * @deny (create, update, delete) All client-side write operations are forbidden to prevent self-promotion of privileges.
-     * @principle Secures the role-management system by making it read-only from the client. Roles must be assigned by a trusted backend.
+     * @allow (create) An authenticated user creating their own admin document. This is for initial setup.
+     * @deny (update, delete) All client-side write operations are forbidden to prevent self-promotion of privileges.
+     * @principle Secures the role-management system by making it read-only from the client after creation.
      */
     match /roles_admin/{adminId} {
       allow get, list: if isAdmin();
-      allow create: if false;
+      allow create: if isOwner(adminId); // This allows you to create your own admin doc
       allow update: if false;
       allow delete: if false;
     }
